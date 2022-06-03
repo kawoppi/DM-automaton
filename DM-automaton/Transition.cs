@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace DM_automaton
 {
-	public class Transition<TState, TSymbol> : IComparable<Transition<TState, TSymbol>>
+	public class Transition<TState> : IComparable<Transition<TState>>
 		where TState : IComparable<TState>
 	{
 		private TState fromState;
-		private TSymbol symbol; //TODO use ISymbol
+		private ISymbol symbol;
 		private TState toState;
 
-		public Transition(TState from, TSymbol symbol, TState to)
+		public Transition(TState from, ISymbol symbol, TState to)
 		{
 			this.fromState = from;
 			this.symbol = symbol;
 			this.toState = to;
 		}
 
-		public int CompareTo(Transition<TState, TSymbol>? other)
+		public int CompareTo(Transition<TState>? other)
 		{
 			throw new NotImplementedException();
 		}
