@@ -8,8 +8,10 @@ namespace DM_automaton
 		{
 			Console.WriteLine("hi");
 			KeywordSet baseType = new KeywordSet();
+			StartsWith anySegment = new StartsWith("/");
 			KeywordSet procModifier = new KeywordSet("/proc", "/verb");
 			KeywordSet typeModifier = new KeywordSet("/gobal", "/const", "/tmp");
+			AnyBetween parameters = new AnyBetween("(", ")");
 		}
 	}
 }

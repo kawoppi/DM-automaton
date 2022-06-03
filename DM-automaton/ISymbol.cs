@@ -30,4 +30,42 @@ namespace DM_automaton
 			return this.keywords.Contains(input);
 		}
 	}
+
+	/// <summary>
+	/// Can check a string to see if it starts with a specified string.
+	/// </summary>
+	public class StartsWith : ISymbol
+	{
+		private string start;
+
+		public StartsWith(string start)
+		{
+			this.start = start;
+		}
+
+		public override bool Validate(string input)
+		{
+			return input.StartsWith(this.start);
+		}
+	}
+
+	/// <summary>
+	/// Can check a string to see if it starts and ends with the specified strings.
+	/// </summary>
+	public class AnyBetween : ISymbol
+	{
+		private string start;
+		private string end;
+
+		public AnyBetween(string start, string end)
+		{
+			this.start = start;
+			this.end = end;
+		}
+
+		public override bool Validate(string input)
+		{
+			return input.StartsWith(this.start) && input.EndsWith(this.end);
+		}
+	}
 }
