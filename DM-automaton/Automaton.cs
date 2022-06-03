@@ -13,7 +13,7 @@ namespace DM_automaton
 		private SortedSet<TState> states;
 		private SortedSet<TState> startStates;
 		private SortedSet<TState> finalStates;
-		private SortedSet<TSymbol> symbols;
+		private SortedSet<TSymbol> symbols; //TODO use ISymbol
 
 		public Automaton(SortedSet<TSymbol> symbols)
 		{

@@ -1,12 +1,15 @@
 ﻿using System;
 
-namespace Automaton
+namespace DM_automaton
 {
 	class Program
 	{
 		static void Main(string[] args)
 		{
 			Console.WriteLine("hi");
+			KeywordSet baseType = new KeywordSet();
+			KeywordSet procModifier = new KeywordSet("/proc", "/verb");
+			KeywordSet typeModifier = new KeywordSet("/gobal", "/const", "/tmp");
 		}
 	}
 }

@@ -10,7 +10,7 @@ namespace DM_automaton
 		where TState : IComparable<TState>
 	{
 		private TState fromState;
-		private TSymbol symbol;
+		private TSymbol symbol; //TODO use ISymbol
 		private TState toState;
 
 		public Transition(TState from, TSymbol symbol, TState to)
