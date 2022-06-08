@@ -18,7 +18,6 @@ namespace DM_automaton
 
 /* TODO:
  * implement path splitter
- * add symbol callback
  * port automaton code
  * convert NDFA to DFA automatically
  * (create automaton unit tests)

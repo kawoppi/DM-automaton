@@ -10,10 +10,10 @@ namespace DM_automaton
 		where TState : IComparable<TState>
 	{
 		private TState fromState;
-		private ISymbol symbol;
+		private Symbol symbol;
 		private TState toState;
 
-		public Transition(TState from, ISymbol symbol, TState to)
+		public Transition(TState from, Symbol symbol, TState to)
 		{
 			this.fromState = from;
 			this.symbol = symbol;
