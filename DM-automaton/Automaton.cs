@@ -54,6 +54,83 @@ namespace DM_automaton
 			this.finalStates.Add(state);
 		}
 
+
+
+		public bool IsDFA()
+		{
+			foreach(TState state in this.states)
+			{
+				foreach (Symbol symbol in this.symbols)
+				{
+					if (this.GetToStates(state, symbol).Count != 1)
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		/// <summary>
+		/// Return the set of states can be reached from a given state when a given symbol is received.
+		/// </summary>
+		public ISet<TState> GetToStates(TState from, string symbol)
+		{
+			SortedSet<TState> states = new SortedSet<TState>();
+			foreach (Transition<TState> transition in this.transitions)
+			{
+				if (transition.FromState.Equals(from))
+				{
+					if (transition.Symbol.Validate(symbol))
+					{
+						states.Add(transition.ToState);
+					}
+				}
+			}
+			return states;
+		}
+
+		/// <summary>
+		/// Return the set of states can be reached from a given state when a given symbol is received.
+		/// </summary>
+		public ISet<TState> GetToStates(TState from, Symbol symbol)
+		{
+			SortedSet<TState> states = new SortedSet<TState>();
+			foreach (Transition<TState> transition in this.transitions)
+			{
+				if (transition.FromState.Equals(from))
+				{
+					if (transition.Symbol.Equals(symbol))
+					{
+						states.Add(transition.ToState);
+					}
+				}
+			}
+			return states;
+		}
+
+		public bool AcceptDFAOnly(string sequence)
+		{
+			TState currentState = this.startStates.First();
+			Console.WriteLine($"Accept sequence {sequence}, start at state {currentState}");
+
+			foreach (string symbol in this.inputSplitter.Split(sequence))
+			{
+				ISet<TState> toStates = this.GetToStates(currentState, symbol);
+				if (toStates.Count != 1)
+				{
+					Debug.Fail("multiple to states found in DFA");
+					return false;
+				}
+				Console.Write($"Went from state {currentState} ");
+				currentState = toStates.First<TState>();
+				Console.WriteLine($"to state {currentState} using symbol {symbol}");
+			}
+			return this.finalStates.Contains(currentState);
+		}
+
+
+
 		public override string ToString()
 		{
 			string output = "(";

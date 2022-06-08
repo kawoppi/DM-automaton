@@ -22,6 +22,7 @@ namespace DM_automaton
 			Automaton<String> automaton = new Automaton<string>(alphabet, null);
 			automaton.AddTransition(new Transition<string>("A", anySegment, "B"));
 			Console.WriteLine(automaton);
+			Console.WriteLine(automaton.IsDFA());
 		}
 	}
 }
