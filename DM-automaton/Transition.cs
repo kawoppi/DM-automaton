@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DM_automaton
 {
-	public class Transition<TState> : IComparable<Transition<TState>>
+	public class Transition<TState>
 		where TState : IComparable<TState>
 	{
 		public TState FromState { get { return this.fromState; } }

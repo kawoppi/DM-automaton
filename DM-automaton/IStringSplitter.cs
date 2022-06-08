@@ -18,4 +18,12 @@ namespace DM_automaton
 			throw new NotImplementedException(); //TODO implement
 		}
 	}
+
+	public class SpaceSplitter : IStringSplitter
+	{
+		public override string[] Split(string input)
+		{
+			return input.Split(' ');
+		}
+	}
 }

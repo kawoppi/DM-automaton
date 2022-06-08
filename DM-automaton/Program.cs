@@ -21,8 +21,33 @@ namespace DM_automaton
 
 			Automaton<String> automaton = new Automaton<string>(alphabet, null);
 			automaton.AddTransition(new Transition<string>("A", anySegment, "B"));
+			/*Console.WriteLine(automaton);
+			Console.WriteLine(automaton.IsDFA());*/
+
+			TestDFA();
+		}
+
+		static void TestDFA()
+		{
+			KeywordSet a = new KeywordSet("a");
+			KeywordSet b = new KeywordSet("b");
+
+			ISet<Symbol> alphabet = new HashSet<Symbol>();
+			alphabet.Add(a);
+			alphabet.Add(b);
+
+			Automaton<String> automaton = new Automaton<string>(alphabet, new SpaceSplitter());
+			automaton.AddTransition(new Transition<string>("A", a, "B"));
+			automaton.AddTransition(new Transition<string>("A", b, "A"));
+			automaton.AddTransition(new Transition<string>("B", a, "B"));
+			automaton.AddTransition(new Transition<string>("B", b, "B"));
+			automaton.DefineAsStartState("A");
+			automaton.DefineAsFinalState("B");
 			Console.WriteLine(automaton);
 			Console.WriteLine(automaton.IsDFA());
+
+			automaton.AcceptDFAOnly("a b a");
+			automaton.AcceptDFAOnly("b b a");
 		}
 	}
 }

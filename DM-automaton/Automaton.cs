@@ -19,7 +19,7 @@ namespace DM_automaton
 
 		public Automaton(ISet<Symbol> symbols, IStringSplitter inputSplitter)
 		{
-			this.transitions = new SortedSet<Transition<TState>>();
+			this.transitions = new HashSet<Transition<TState>>();
 			this.states = new SortedSet<TState>();
 			this.startStates = new SortedSet<TState>();
 			this.finalStates = new SortedSet<TState>();
