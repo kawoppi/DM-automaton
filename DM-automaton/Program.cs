@@ -53,13 +53,12 @@ namespace DM_automaton
 }
 
 /* TODO:
- * implement path splitter
- * port automaton code
  * convert NDFA to DFA automatically
  * (create automaton unit tests)
  * 
  * finish grammar definition
  * read DM file line by line
+ * implement path splitter
  * 
  * create DM definition datastructures
  * have automaton create DM definions
