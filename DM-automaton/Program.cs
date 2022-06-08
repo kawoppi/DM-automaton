@@ -6,12 +6,22 @@ namespace DM_automaton
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("hi");
 			KeywordSet baseType = new KeywordSet();
 			StartsWith anySegment = new StartsWith("/");
 			KeywordSet procModifier = new KeywordSet("/proc", "/verb");
 			KeywordSet typeModifier = new KeywordSet("/gobal", "/const", "/tmp");
 			AnyBetween parameters = new AnyBetween("(", ")");
+
+			ISet<Symbol> alphabet = new HashSet<Symbol>();
+			alphabet.Add(baseType);
+			alphabet.Add(anySegment);
+			alphabet.Add(procModifier);
+			alphabet.Add(typeModifier);
+			alphabet.Add(parameters);
+
+			Automaton<String> automaton = new Automaton<string>(alphabet, null);
+			automaton.AddTransition(new Transition<string>("A", anySegment, "B"));
+			Console.WriteLine(automaton);
 		}
 	}
 }

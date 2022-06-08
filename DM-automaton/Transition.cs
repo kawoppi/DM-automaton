@@ -9,6 +9,10 @@ namespace DM_automaton
 	public class Transition<TState> : IComparable<Transition<TState>>
 		where TState : IComparable<TState>
 	{
+		public TState FromState { get { return this.fromState; } }
+		public Symbol Symbol { get { return this.symbol; } }
+		public TState ToState { get { return this.toState; } }
+
 		private TState fromState;
 		private Symbol symbol;
 		private TState toState;
@@ -23,6 +27,11 @@ namespace DM_automaton
 		public int CompareTo(Transition<TState>? other)
 		{
 			throw new NotImplementedException();
+		}
+
+		public override string ToString()
+		{
+			return "(" + this.fromState + ", " + this.symbol + ") --> " + this.toState;
 		}
 	}
 }

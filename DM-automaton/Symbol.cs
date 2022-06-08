@@ -55,6 +55,16 @@ namespace DM_automaton
 		{
 			return this.keywords.Contains(input);
 		}
+
+		public override string ToString()
+		{
+			string output = "matches: ";
+			foreach (string keyword in this.keywords)
+			{
+				output += "\"" + keyword + "\" ";
+			}
+			return output;
+		}
 	}
 
 
@@ -74,6 +84,11 @@ namespace DM_automaton
 		protected override bool ValidateInput(string input)
 		{
 			return input.StartsWith(this.start);
+		}
+
+		public override string ToString()
+		{
+			return "starts with: \"" + this.start + "\"";
 		}
 	}
 
@@ -96,6 +111,11 @@ namespace DM_automaton
 		protected override bool ValidateInput(string input)
 		{
 			return input.StartsWith(this.start) && input.EndsWith(this.end);
+		}
+
+		public override string ToString()
+		{
+			return "starts with: \"" + this.start + "\" ends with: \"" + this.end + "\"";
 		}
 	}
 }
