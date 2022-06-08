@@ -14,14 +14,16 @@ namespace DM_automaton
 		private SortedSet<TState> startStates;
 		private SortedSet<TState> finalStates;
 		private SortedSet<ISymbol> symbols;
+		private IStringSplitter inputSplitter;
 
-		public Automaton(SortedSet<ISymbol> symbols)
+		public Automaton(SortedSet<ISymbol> symbols, IStringSplitter inputSplitter)
 		{
 			this.transitions = new SortedSet<Transition<TState>>();
 			this.states = new SortedSet<TState>();
 			this.startStates = new SortedSet<TState>();
 			this.finalStates = new SortedSet<TState>();
 			this.symbols = symbols;
+			this.inputSplitter = inputSplitter;
 		}
 	}
 }
