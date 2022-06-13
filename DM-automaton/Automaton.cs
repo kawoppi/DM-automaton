@@ -129,6 +129,20 @@ namespace DM_automaton
 			return this.finalStates.Contains(currentState);
 		}
 
+		public Automaton<TState> CreateDFA()
+		{
+			if(this.IsDFA())
+			{
+				return this;
+			}
+			Automaton<TState> automaton = new Automaton<TState>(this.symbols, this.inputSplitter);
+			//foutconditie aanmaken
+			//maak states voor alle combinaties bestaande states
+			//kijk per state, per input naar welke state het moet gaan
+			//onbereikbare toestanden verwijderen
+			return automaton;
+		}
+
 
 
 		public override string ToString()
