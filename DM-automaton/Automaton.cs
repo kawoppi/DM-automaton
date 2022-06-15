@@ -62,7 +62,7 @@ namespace DM_automaton
 
 		public bool IsDFA()
 		{
-			foreach(StateSet state in this.states)
+			foreach (StateSet state in this.states)
 			{
 				foreach (Symbol symbol in this.symbols)
 				{
@@ -135,9 +135,10 @@ namespace DM_automaton
 
 		public Automaton CreateDFA()
 		{
-			if(this.IsDFA())
+			if (this.IsDFA())
 			{
-				//return this;//
+				Console.WriteLine("automaton is already a DFA!");
+				return this;
 			}
 			Automaton dfa = new Automaton(this.symbols, this.inputSplitter);
 
@@ -159,13 +160,58 @@ namespace DM_automaton
 					newStates.Add(new StateSet(combinedStates));
 				}
 			}
-			Console.WriteLine(StatesToString(newStates));//
+			Console.WriteLine("new states: " + StatesToString(newStates));//
 
 			//check each new state where it should go for each input
+			foreach (StateSet state in newStates)
+			{
+				//get tostates of each substate, turn them into a single state to transition to
+				//if there are none, the tostate will be the empty set
+				foreach (Symbol symbol in this.symbols)
+				{
+					StateSet toState = GetToStateFromSubstates(state, symbol);
+					Console.WriteLine(state + " --(" + symbol + ")-> " + toState);
+					dfa.AddTransition(new Transition<StateSet>(state, symbol, toState));
+				}
+			}
 
 			//remove unreachable states
 
+			//any new state containing an original final state should also become an final state
+			foreach (StateSet state in dfa.states)
+			{
+				foreach (StateSet finalState in this.finalStates)
+				{
+					if (state.States.Contains(finalState.States.First()))
+					{
+						dfa.finalStates.Add(state);
+					}
+				}
+			}
+			foreach (StateSet state in this.startStates)
+			{
+				dfa.DefineAsStartState(state);
+			}
+
+			Console.WriteLine(dfa);
 			return dfa;
+		}
+
+		public StateSet GetToStateFromSubstates(StateSet from, Symbol symbol)
+		{
+			SortedSet<string> toStates = new SortedSet<string>(); //for {SA}
+			foreach (string subState in from.States) //check each substate in the set
+			{
+				ISet<StateSet> subToStates = this.GetToStates(new StateSet(subState), symbol); //for {S}
+				foreach (StateSet subToState in subToStates)
+				{
+					foreach (string state in subToState.States)
+					{
+						toStates.Add(state);
+					}
+				}
+			}
+			return new StateSet(toStates);
 		}
 
 

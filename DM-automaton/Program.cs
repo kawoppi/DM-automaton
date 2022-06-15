@@ -39,16 +39,20 @@ namespace DM_automaton
 			//accept if contains 'a'
 			Automaton automaton = new Automaton(alphabet, new SpaceSplitter());
 			automaton.AddTransition("A", a, "B");
-			automaton.AddTransition("A", b, "A");
-			automaton.AddTransition("B", a, "B");
-			automaton.AddTransition("B", b, "B");
+			//automaton.AddTransition("A", b, "A");
+			//automaton.AddTransition("B", a, "B");
+			//automaton.AddTransition("B", b, "B");
 			automaton.DefineAsStartState(new StateSet("A"));
 			automaton.DefineAsFinalState(new StateSet("B"));
+
+			automaton = automaton.CreateDFA();
 
 			TestWithString(automaton, "a b a", true);
 			TestWithString(automaton, "b b b", false);
 
-			automaton.CreateDFA();
+			TestWithString(automaton, "a", false);
+
+
 		}
 
 		static void TestWithString(Automaton automaton, string input, bool expectedResult)
