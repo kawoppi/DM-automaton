@@ -19,7 +19,7 @@ namespace DM_automaton
 		private void CreateAutomata()
 		{
 			KeywordSet baseType = new KeywordSet("/datum", "/atom", "/turf", "/area", "/mob", "/obj", "/client", "/list", "/world");
-			StartsWith subtype = new StartsWith("/"); //TODO prevent this from also matching others
+			StartsWith subtype = new StartsWith("/");
 			KeywordSet procModifier = new KeywordSet("/proc", "/verb");
 			KeywordSet typeModifier = new KeywordSet("/gobal", "/const", "/tmp");
 			AnyBetween parameters = new AnyBetween("(", ")");
