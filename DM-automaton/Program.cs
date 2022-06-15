@@ -20,7 +20,7 @@ namespace DM_automaton
 			alphabet.Add(parameters);
 
 			Automaton automaton = new Automaton(alphabet, null);
-			automaton.AddTransition(new Transition<string>("A", anySegment, "B"));
+			automaton.AddTransition("A", anySegment, "B");
 			/*Console.WriteLine(automaton);
 			Console.WriteLine(automaton.IsDFA());*/
 
@@ -36,18 +36,28 @@ namespace DM_automaton
 			alphabet.Add(a);
 			alphabet.Add(b);
 
+			//accept if contains 'a'
 			Automaton automaton = new Automaton(alphabet, new SpaceSplitter());
-			automaton.AddTransition(new Transition<string>("A", a, "B"));
-			automaton.AddTransition(new Transition<string>("A", b, "A"));
-			automaton.AddTransition(new Transition<string>("B", a, "B"));
-			automaton.AddTransition(new Transition<string>("B", b, "B"));
-			automaton.DefineAsStartState("A");
-			automaton.DefineAsFinalState("B");
-			Console.WriteLine(automaton);
-			Console.WriteLine(automaton.IsDFA());
+			automaton.AddTransition("A", a, "B");
+			automaton.AddTransition("A", b, "A");
+			automaton.AddTransition("B", a, "B");
+			automaton.AddTransition("B", b, "B");
+			automaton.DefineAsStartState(new StateSet("A"));
+			automaton.DefineAsFinalState(new StateSet("B"));
 
-			automaton.AcceptDFAOnly("a b a");
-			automaton.AcceptDFAOnly("b b a");
+			TestWithString(automaton, "a b a", true);
+			TestWithString(automaton, "b b b", false);
+		}
+
+		static void TestWithString(Automaton automaton, string input, bool expectedResult)
+		{
+			Console.WriteLine("testing automaton:");
+			Console.WriteLine(automaton);
+			Console.WriteLine("with input: " + input);
+			bool accepted = automaton.AcceptDFAOnly(input);
+			Console.WriteLine("automaton result: " + accepted);
+			Console.WriteLine("expected result: " + expectedResult);
+			Console.WriteLine();
 		}
 	}
 }

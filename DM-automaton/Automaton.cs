@@ -9,31 +9,36 @@ namespace DM_automaton
 {
 	public class Automaton
 	{
-		private ISet<Transition<string>> transitions;
-		private SortedSet<string> states;
-		private SortedSet<string> startStates;
-		private SortedSet<string> finalStates;
+		private ISet<Transition<StateSet>> transitions;
+		private SortedSet<StateSet> states;
+		private SortedSet<StateSet> startStates;
+		private SortedSet<StateSet> finalStates;
 		private ISet<Symbol> symbols;
 		private IStringSplitter inputSplitter;
 
 		public Automaton(ISet<Symbol> symbols, IStringSplitter inputSplitter)
 		{
-			this.transitions = new HashSet<Transition<string>>();
-			this.states = new SortedSet<string>();
-			this.startStates = new SortedSet<string>();
-			this.finalStates = new SortedSet<string>();
+			this.transitions = new HashSet<Transition<StateSet>>();
+			this.states = new SortedSet<StateSet>();
+			this.startStates = new SortedSet<StateSet>();
+			this.finalStates = new SortedSet<StateSet>();
 			this.symbols = symbols;
 			this.inputSplitter = inputSplitter;
 		}
 
-		public void AddTransition(Transition<string> transition)
+		public void AddTransition(Transition<StateSet> transition)
 		{
 			this.states.Add(transition.FromState);
 			this.states.Add(transition.ToState);
 			this.transitions.Add(transition);
 		}
 
-		public void DefineAsStartState(string state)
+		public void AddTransition(string fromState, Symbol symbol, string toState)
+		{
+			this.AddTransition(new Transition<StateSet>(new StateSet(fromState), symbol, new StateSet(toState)));
+		}
+
+		public void DefineAsStartState(StateSet state)
 		{
 			if (!this.states.Contains(state))
 			{
@@ -43,7 +48,7 @@ namespace DM_automaton
 			this.startStates.Add(state);
 		}
 
-		public void DefineAsFinalState(string state)
+		public void DefineAsFinalState(StateSet state)
 		{
 			if (!this.states.Contains(state))
 			{
@@ -57,7 +62,7 @@ namespace DM_automaton
 
 		public bool IsDFA()
 		{
-			foreach(string state in this.states)
+			foreach(StateSet state in this.states)
 			{
 				foreach (Symbol symbol in this.symbols)
 				{
@@ -73,10 +78,10 @@ namespace DM_automaton
 		/// <summary>
 		/// Return the set of states can be reached from a given state when a given symbol is received.
 		/// </summary>
-		public ISet<string> GetToStates(string from, string symbol)
+		public ISet<StateSet> GetToStates(StateSet from, string symbol)
 		{
-			SortedSet<string> states = new SortedSet<string>();
-			foreach (Transition<string> transition in this.transitions)
+			SortedSet<StateSet> states = new SortedSet<StateSet>();
+			foreach (Transition<StateSet> transition in this.transitions)
 			{
 				if (transition.FromState.Equals(from))
 				{
@@ -92,10 +97,10 @@ namespace DM_automaton
 		/// <summary>
 		/// Return the set of states can be reached from a given state when a given symbol is received.
 		/// </summary>
-		public ISet<string> GetToStates(string from, Symbol symbol)
+		public ISet<StateSet> GetToStates(StateSet from, Symbol symbol)
 		{
-			SortedSet<string> states = new SortedSet<string>();
-			foreach (Transition<string> transition in this.transitions)
+			SortedSet<StateSet> states = new SortedSet<StateSet>();
+			foreach (Transition<StateSet> transition in this.transitions)
 			{
 				if (transition.FromState.Equals(from))
 				{
@@ -110,19 +115,19 @@ namespace DM_automaton
 
 		public bool AcceptDFAOnly(string sequence)
 		{
-			string currentState = this.startStates.First();
+			StateSet currentState = this.startStates.First();
 			Console.WriteLine($"Accept sequence {sequence}, start at state {currentState}");
 
 			foreach (string symbol in this.inputSplitter.Split(sequence))
 			{
-				ISet<string> toStates = this.GetToStates(currentState, symbol);
+				ISet<StateSet> toStates = this.GetToStates(currentState, symbol);
 				if (toStates.Count != 1)
 				{
 					Debug.Fail("multiple to states found in DFA");
 					return false;
 				}
 				Console.Write($"Went from state {currentState} ");
-				currentState = toStates.First<string>();
+				currentState = toStates.First<StateSet>();
 				Console.WriteLine($"to state {currentState} using symbol {symbol}");
 			}
 			return this.finalStates.Contains(currentState);
@@ -134,12 +139,12 @@ namespace DM_automaton
 			{
 				return this;
 			}
-			Automaton automaton = new Automaton(this.symbols, this.inputSplitter);
+			Automaton dfa = new Automaton(this.symbols, this.inputSplitter);
 			//foutconditie aanmaken
 			//maak states voor alle combinaties bestaande states
 			//kijk per state, per input naar welke state het moet gaan
 			//onbereikbare toestanden verwijderen
-			return automaton;
+			return dfa;
 		}
 
 
@@ -154,10 +159,10 @@ namespace DM_automaton
 			return output;
 		}
 
-		private static string StatesToString(ISet<string> states)
+		private static string StatesToString(ISet<StateSet> states)
 		{
 			string output = "{";
-			foreach (string state in states)
+			foreach (StateSet state in states)
 			{
 				output += state + " ";
 			}

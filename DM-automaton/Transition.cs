@@ -24,11 +24,6 @@ namespace DM_automaton
 			this.toState = to;
 		}
 
-		public int CompareTo(Transition<TState>? other)
-		{
-			throw new NotImplementedException();
-		}
-
 		public override string ToString()
 		{
 			return "(" + this.fromState + ", " + this.symbol + ") --> " + this.toState;
