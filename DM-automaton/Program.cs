@@ -69,8 +69,10 @@ namespace DM_automaton
 }
 
 /* TODO:
- * convert NDFA to DFA automatically
- * (create automaton unit tests)
+ * improve NFA -> DFA code structure
+ * differentiate between state and stateset
+ * differentiate between NFA and DFA
+ * cleanup and document DFA conversion code
  * 
  * finish grammar definition
  * read DM file line by line
