@@ -67,20 +67,20 @@ namespace DM_automaton
 }
 
 /* TODO:
- * improve NFA -> DFA code structure
- * differentiate between state(string) and stateset using generic type
- * cleanup and document DFA conversion code
- * remove unreachable states from DFA
- * improve path splitter
+ * must have:
+ *	read DM file line by line
+ *	
+ *	create DM definition datastructures
+ *	have automaton fill DM datastructures
+ *	organize a collection of DM definition into a tree structure
+ *	print this tree structure
+ *	
  * 
- * change field naming to use m_
- * 
- * finish grammar definition
- * read DM file line by line
- * implement path splitter
- * 
- * create DM definition datastructures
- * have automaton create DM definions
- * organize a collection of DM definitions into a tree structure
- * display this tree structure
+ * cleanup:
+ *	improve NFA -> DFA code structure
+ *	differentiate between state(string) and stateset using generic type
+ *	cleanup and document DFA conversion code
+ *	remove unreachable states from DFA
+ *	improve path splitter
+ *	change field naming to use m_
  */
