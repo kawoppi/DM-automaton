@@ -19,7 +19,7 @@ namespace DM_automaton
 			alphabet.Add(typeModifier);
 			alphabet.Add(parameters);
 
-			Automaton<String> automaton = new Automaton<string>(alphabet, null);
+			Automaton automaton = new Automaton(alphabet, null);
 			automaton.AddTransition(new Transition<string>("A", anySegment, "B"));
 			/*Console.WriteLine(automaton);
 			Console.WriteLine(automaton.IsDFA());*/
@@ -36,7 +36,7 @@ namespace DM_automaton
 			alphabet.Add(a);
 			alphabet.Add(b);
 
-			Automaton<String> automaton = new Automaton<string>(alphabet, new SpaceSplitter());
+			Automaton automaton = new Automaton(alphabet, new SpaceSplitter());
 			automaton.AddTransition(new Transition<string>("A", a, "B"));
 			automaton.AddTransition(new Transition<string>("A", b, "A"));
 			automaton.AddTransition(new Transition<string>("B", a, "B"));
