@@ -6,7 +6,7 @@ namespace DM_automaton
 	{
 		static void Main(string[] args)
 		{
-			KeywordSet baseType = new KeywordSet();
+			KeywordSet baseType = new KeywordSet("/datum", "/atom", "/turf", "/area", "/mob", "/obj", "/client", "/list", "/world");
 			StartsWith anySegment = new StartsWith("/");
 			KeywordSet procModifier = new KeywordSet("/proc", "/verb");
 			KeywordSet typeModifier = new KeywordSet("/gobal", "/const", "/tmp");
@@ -70,10 +70,11 @@ namespace DM_automaton
 
 /* TODO:
  * improve NFA -> DFA code structure
- * differentiate between state and stateset
- * differentiate between NFA and DFA
+ * differentiate between state(string) and stateset using generic type
  * cleanup and document DFA conversion code
  * remove unreachable states from DFA
+ * 
+ * change field naming to use m_
  * 
  * finish grammar definition
  * read DM file line by line
