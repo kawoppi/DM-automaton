@@ -26,7 +26,7 @@ namespace DM_automaton
 			this.inputSplitter = inputSplitter;
 		}
 
-		public void AddTransition(Transition<StateSet> transition)
+		private void AddTransition(Transition<StateSet> transition)
 		{
 			this.states.Add(transition.FromState);
 			this.states.Add(transition.ToState);
@@ -75,44 +75,6 @@ namespace DM_automaton
 			return true;
 		}
 
-		/// <summary>
-		/// Return the set of states can be reached from a given state when a given symbol is received.
-		/// </summary>
-		public ISet<StateSet> GetToStates(StateSet from, string symbol)
-		{
-			SortedSet<StateSet> states = new SortedSet<StateSet>();
-			foreach (Transition<StateSet> transition in this.transitions)
-			{
-				if (transition.FromState.Equals(from))
-				{
-					if (transition.Symbol.Validate(symbol))
-					{
-						states.Add(transition.ToState);
-					}
-				}
-			}
-			return states;
-		}
-
-		/// <summary>
-		/// Return the set of states can be reached from a given state when a given symbol is received.
-		/// </summary>
-		public ISet<StateSet> GetToStates(StateSet from, Symbol symbol)
-		{
-			SortedSet<StateSet> states = new SortedSet<StateSet>();
-			foreach (Transition<StateSet> transition in this.transitions)
-			{
-				if (transition.FromState.Equals(from))
-				{
-					if (transition.Symbol.Equals(symbol))
-					{
-						states.Add(transition.ToState);
-					}
-				}
-			}
-			return states;
-		}
-
 		public bool AcceptDFAOnly(string sequence)
 		{
 			StateSet currentState = this.startStates.First();
@@ -133,6 +95,9 @@ namespace DM_automaton
 			return this.finalStates.Contains(currentState);
 		}
 
+		/// <summary>
+		/// Creates a DFA from an Automaton. Does not support the use of epsilon.
+		/// </summary>
 		public Automaton CreateDFA()
 		{
 			if (this.IsDFA())
@@ -155,14 +120,13 @@ namespace DM_automaton
 			{
 				foreach (StateSet state2 in this.states)
 				{
-					Console.WriteLine("combining: " + state1 + state2);//
 					string[] combinedStates = Enumerable.ToArray(state1.States.Union(state2.States));
 					newStates.Add(new StateSet(combinedStates));
 				}
 			}
 			Console.WriteLine("new states: " + StatesToString(newStates));//
 
-			//check each new state where it should go for each input
+			//give each new state a transition for each symbol
 			foreach (StateSet state in newStates)
 			{
 				//get tostates of each substate, turn them into a single state to transition to
@@ -174,8 +138,6 @@ namespace DM_automaton
 					dfa.AddTransition(new Transition<StateSet>(state, symbol, toState));
 				}
 			}
-
-			//remove unreachable states
 
 			//any new state containing an original final state should also become an final state
 			foreach (StateSet state in dfa.states)
@@ -197,12 +159,50 @@ namespace DM_automaton
 			return dfa;
 		}
 
-		public StateSet GetToStateFromSubstates(StateSet from, Symbol symbol)
+		/// <summary>
+		/// Return the set of states can be reached from a given state when a given symbol is received.
+		/// </summary>
+		private ISet<StateSet> GetToStates(StateSet from, string symbol)
 		{
-			SortedSet<string> toStates = new SortedSet<string>(); //for {SA}
+			SortedSet<StateSet> states = new SortedSet<StateSet>();
+			foreach (Transition<StateSet> transition in this.transitions)
+			{
+				if (transition.FromState.Equals(from))
+				{
+					if (transition.Symbol.Validate(symbol))
+					{
+						states.Add(transition.ToState);
+					}
+				}
+			}
+			return states;
+		}
+
+		/// <summary>
+		/// Return the set of states can be reached from a given state when a given symbol is received.
+		/// </summary>
+		private ISet<StateSet> GetToStates(StateSet from, Symbol symbol)
+		{
+			SortedSet<StateSet> states = new SortedSet<StateSet>();
+			foreach (Transition<StateSet> transition in this.transitions)
+			{
+				if (transition.FromState.Equals(from))
+				{
+					if (transition.Symbol.Equals(symbol))
+					{
+						states.Add(transition.ToState);
+					}
+				}
+			}
+			return states;
+		}
+
+		private StateSet GetToStateFromSubstates(StateSet from, Symbol symbol)
+		{
+			SortedSet<string> toStates = new SortedSet<string>(); //for {AB}
 			foreach (string subState in from.States) //check each substate in the set
 			{
-				ISet<StateSet> subToStates = this.GetToStates(new StateSet(subState), symbol); //for {S}
+				ISet<StateSet> subToStates = this.GetToStates(new StateSet(subState), symbol); //for {A}
 				foreach (StateSet subToState in subToStates)
 				{
 					foreach (string state in subToState.States)

@@ -73,6 +73,7 @@ namespace DM_automaton
  * differentiate between state and stateset
  * differentiate between NFA and DFA
  * cleanup and document DFA conversion code
+ * remove unreachable states from DFA
  * 
  * finish grammar definition
  * read DM file line by line
