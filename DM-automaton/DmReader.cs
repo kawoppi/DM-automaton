@@ -53,9 +53,10 @@ namespace DM_automaton
 			m_procAcceptor.AddTransition("D", parameters, "E");
 			m_procAcceptor.DefineAsStartState("A");
 			m_procAcceptor.DefineAsFinalState("E");
-			Console.WriteLine(m_procAcceptor);
+			//TODO make this work for global procs
 
 			//temp test//
+			Console.WriteLine(m_procAcceptor);
 			m_procAcceptor = m_procAcceptor.CreateDFA();
 			Console.WriteLine(m_procAcceptor);
 			Program.TestWithString(m_procAcceptor, "/datum/animal/hostile/retaliate/frog(/var/color)", true);
