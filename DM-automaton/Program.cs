@@ -6,26 +6,8 @@ namespace DM_automaton
 	{
 		static void Main(string[] args)
 		{
-			KeywordSet baseType = new KeywordSet("/datum", "/atom", "/turf", "/area", "/mob", "/obj", "/client", "/list", "/world");
-			StartsWith anySegment = new StartsWith("/");
-			KeywordSet procModifier = new KeywordSet("/proc", "/verb");
-			KeywordSet typeModifier = new KeywordSet("/gobal", "/const", "/tmp");
-			AnyBetween parameters = new AnyBetween("(", ")");
-
-			ISet<Symbol> alphabet = new HashSet<Symbol>();
-			alphabet.Add(baseType);
-			alphabet.Add(anySegment);
-			alphabet.Add(procModifier);
-			alphabet.Add(typeModifier);
-			alphabet.Add(parameters);
-
-			Automaton automaton = new Automaton(alphabet, null);
-			automaton.AddTransition("A", anySegment, "B");
-			/*Console.WriteLine(automaton);
-			Console.WriteLine(automaton.IsDFA());*/
-
-			TestDFA();
-			TestSplitter(new PathSplitter(), "/datum/animal/hostile/retaliate/frog(/var/color)");
+			//TestDFA();
+			TestDmReader("/datum/animal/hostile/retaliate/frog(/var/color)");
 		}
 
 		static void TestDFA()
@@ -43,8 +25,8 @@ namespace DM_automaton
 			//automaton.AddTransition("A", b, "A");
 			//automaton.AddTransition("B", a, "B");
 			//automaton.AddTransition("B", b, "B");
-			automaton.DefineAsStartState(new StateSet("A"));
-			automaton.DefineAsFinalState(new StateSet("B"));
+			automaton.DefineAsStartState("A");
+			automaton.DefineAsFinalState("B");
 
 			automaton = automaton.CreateDFA();
 
@@ -52,11 +34,15 @@ namespace DM_automaton
 			TestWithString(automaton, "b b b", false);
 
 			TestWithString(automaton, "a", false);
-
-
 		}
 
-		static void TestWithString(Automaton automaton, string input, bool expectedResult)
+		static void TestDmReader(string input)
+		{
+			TestSplitter(new PathSplitter(), input);
+			DmReader dmReader = new DmReader();
+		}
+
+		public static void TestWithString(Automaton automaton, string input, bool expectedResult)
 		{
 			Console.WriteLine("testing automaton:");
 			Console.WriteLine(automaton);

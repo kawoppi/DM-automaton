@@ -19,22 +19,38 @@ namespace DM_automaton
 		private void CreateAutomata()
 		{
 			KeywordSet baseType = new KeywordSet("/datum", "/atom", "/turf", "/area", "/mob", "/obj", "/client", "/list", "/world");
-			StartsWith anySegment = new StartsWith("/");
+			StartsWith subtype = new StartsWith("/"); //TODO prevent this from also matching others
 			KeywordSet procModifier = new KeywordSet("/proc", "/verb");
 			KeywordSet typeModifier = new KeywordSet("/gobal", "/const", "/tmp");
 			AnyBetween parameters = new AnyBetween("(", ")");
 
 			ISet<Symbol> alphabet = new HashSet<Symbol>();
 			alphabet.Add(baseType);
-			alphabet.Add(anySegment);
+			alphabet.Add(subtype);
 			alphabet.Add(procModifier);
 			alphabet.Add(typeModifier);
 			alphabet.Add(parameters);
-			//TODO seperate alphabets?
 
 			IStringSplitter splitter = new PathSplitter();
 			m_datumAcceptor = new Automaton(alphabet, splitter);
 			m_procAcceptor = new Automaton(alphabet, splitter);
+
+			//datum acceptor
+			m_datumAcceptor.AddTransition("A", baseType, "B");
+			m_datumAcceptor.AddTransition("B", subtype, "B");
+			m_datumAcceptor.AddTransition("B", typeModifier, "C");
+			m_datumAcceptor.AddTransition("B", subtype, "D");
+			m_datumAcceptor.AddTransition("C", subtype, "D");
+			m_datumAcceptor.DefineAsStartState("A");
+			m_datumAcceptor.DefineAsFinalState("D");
+			Console.WriteLine(m_datumAcceptor);
+
+			//TODO proc acceptor
+
+			//temp test//
+			m_datumAcceptor = m_datumAcceptor.CreateDFA();
+			Console.WriteLine(m_datumAcceptor);
+			Program.TestWithString(m_datumAcceptor, "/datum/animal/hostile/retaliate/frog(/var/color)", false);
 		}
 	}
 }

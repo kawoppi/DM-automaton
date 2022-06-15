@@ -38,7 +38,12 @@ namespace DM_automaton
 			this.AddTransition(new Transition<StateSet>(new StateSet(fromState), symbol, new StateSet(toState)));
 		}
 
-		public void DefineAsStartState(StateSet state)
+		public void DefineAsStartState(string state)
+		{
+			DefineAsStartState(new StateSet(state));
+		}
+
+		private void DefineAsStartState(StateSet state)
 		{
 			if (!this.states.Contains(state))
 			{
@@ -48,7 +53,12 @@ namespace DM_automaton
 			this.startStates.Add(state);
 		}
 
-		public void DefineAsFinalState(StateSet state)
+		public void DefineAsFinalState(string state)
+		{
+			DefineAsFinalState(new StateSet(state));
+		}
+
+		private void DefineAsFinalState(StateSet state)
 		{
 			if (!this.states.Contains(state))
 			{
