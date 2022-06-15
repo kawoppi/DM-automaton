@@ -32,8 +32,9 @@ namespace DM_automaton
 			alphabet.Add(parameters);
 			//TODO seperate alphabets?
 
-			m_datumAcceptor = new Automaton(alphabet, null);
-			m_procAcceptor = new Automaton(alphabet, null);
+			IStringSplitter splitter = new PathSplitter();
+			m_datumAcceptor = new Automaton(alphabet, splitter);
+			m_procAcceptor = new Automaton(alphabet, splitter);
 		}
 	}
 }

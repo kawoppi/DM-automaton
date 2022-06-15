@@ -25,6 +25,7 @@ namespace DM_automaton
 			Console.WriteLine(automaton.IsDFA());*/
 
 			TestDFA();
+			TestSplitter(new PathSplitter(), "/datum/animal/hostile/retaliate/frog(/var/color)");
 		}
 
 		static void TestDFA()
@@ -65,6 +66,17 @@ namespace DM_automaton
 			Console.WriteLine("expected result: " + expectedResult);
 			Console.WriteLine();
 		}
+
+		static void TestSplitter(IStringSplitter splitter, string input)
+		{
+			Console.WriteLine("testing splitter with input \"" + input + "\"");
+			string[] outputs = splitter.Split(input);
+			foreach (string output in outputs)
+			{
+				Console.Write(output + " ");
+			}
+			Console.WriteLine();
+		}
 	}
 }
 
@@ -73,6 +85,7 @@ namespace DM_automaton
  * differentiate between state(string) and stateset using generic type
  * cleanup and document DFA conversion code
  * remove unreachable states from DFA
+ * improve path splitter
  * 
  * change field naming to use m_
  * 
