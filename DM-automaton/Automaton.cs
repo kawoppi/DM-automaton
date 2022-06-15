@@ -127,7 +127,7 @@ namespace DM_automaton
 					return false;
 				}
 				Console.Write($"Went from state {currentState} ");
-				currentState = toStates.First<StateSet>();
+				currentState = toStates.First();
 				Console.WriteLine($"to state {currentState} using symbol {symbol}");
 			}
 			return this.finalStates.Contains(currentState);
@@ -137,13 +137,34 @@ namespace DM_automaton
 		{
 			if(this.IsDFA())
 			{
-				return this;
+				//return this;//
 			}
 			Automaton dfa = new Automaton(this.symbols, this.inputSplitter);
-			//foutconditie aanmaken
-			//maak states voor alle combinaties bestaande states
-			//kijk per state, per input naar welke state het moet gaan
-			//onbereikbare toestanden verwijderen
+
+			//create the empty state from which you cannot escape
+			StateSet emptySet = new StateSet();
+			foreach (Symbol symbol in dfa.symbols)
+			{
+				dfa.AddTransition(new Transition<StateSet>(emptySet, symbol, emptySet));
+			}
+
+			//create a new state for each combination of states
+			SortedSet<StateSet> newStates = new SortedSet<StateSet>();
+			foreach (StateSet state1 in this.states)
+			{
+				foreach (StateSet state2 in this.states)
+				{
+					Console.WriteLine("combining: " + state1 + state2);//
+					string[] combinedStates = Enumerable.ToArray(state1.States.Union(state2.States));
+					newStates.Add(new StateSet(combinedStates));
+				}
+			}
+			Console.WriteLine(StatesToString(newStates));//
+
+			//check each new state where it should go for each input
+
+			//remove unreachable states
+
 			return dfa;
 		}
 

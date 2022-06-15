@@ -8,7 +8,13 @@ namespace DM_automaton
 {
 	public class StateSet : IComparable<StateSet>
 	{
-		private ISet<string> states;
+		public SortedSet<string> States { get { return this.states; } }
+		private SortedSet<string> states;
+
+		public StateSet(SortedSet<string> states)
+		{
+			this.states = states;
+		}
 
 		public StateSet(params string[] states)
 		{
@@ -35,7 +41,7 @@ namespace DM_automaton
 
 		public override int GetHashCode()
 		{
-			return HashCode.Combine(states);
+			return HashCode.Combine(states.ToArray());
 		}
 
 		public int CompareTo(StateSet? other)
@@ -44,20 +50,20 @@ namespace DM_automaton
 			{
 				return 1;
 			}
-
-			int result = 0;
-			foreach (string state in this.states)
+			if (this.states.Count != other.states.Count)
 			{
-				foreach (string otherState in other.states)
+				return this.states.Count - other.states.Count;
+			}
+
+			for(int i = 0; i < this.states.Count; i++)
+			{
+				int result = this.states.ElementAt(i).CompareTo(other.states.ElementAt(i));
+				if (result != 0)
 				{
-					result = state.CompareTo(otherState);
-					if (result != 0)
-					{
-						return result;
-					}
+					return result;
 				}
 			}
-			return result;
+			return 0;
 		}
 
 		public override string ToString()

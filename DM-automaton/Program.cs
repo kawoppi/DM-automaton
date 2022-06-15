@@ -47,6 +47,8 @@ namespace DM_automaton
 
 			TestWithString(automaton, "a b a", true);
 			TestWithString(automaton, "b b b", false);
+
+			automaton.CreateDFA();
 		}
 
 		static void TestWithString(Automaton automaton, string input, bool expectedResult)
