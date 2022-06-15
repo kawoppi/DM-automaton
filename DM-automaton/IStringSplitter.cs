@@ -22,8 +22,13 @@ namespace DM_automaton
 			//remove parameters first so they don't get split in segments
 			int startingIndex = input.IndexOf('(');
 			int endingIndex = input.LastIndexOf(')');
-			string parameters = input.Substring(startingIndex, endingIndex - startingIndex + 1);
-			input = input.Substring(0, startingIndex); //remove the parameters as they are already processed
+
+			string parameters = null;
+			if (startingIndex >= 0 && endingIndex >= 0)
+			{
+				parameters = input.Substring(startingIndex, endingIndex - startingIndex + 1);
+				input = input.Substring(0, startingIndex); //remove the parameters as they are already processed
+			}
 
 			//now separate the path segments
 			List<string> segments = new List<string>(input.Split('/', StringSplitOptions.RemoveEmptyEntries));
@@ -31,7 +36,10 @@ namespace DM_automaton
 			{
 				segments[i] = "/" + segments[i];
 			}
-			segments.Add(parameters); //add the parameters back at the end
+			if (parameters != null)
+			{
+				segments.Add(parameters); //add the parameters back at the end
+			}
 			return segments.ToArray();
 			//TODO put parameters back in the right order and support multiple of them
 		}

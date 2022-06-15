@@ -13,17 +13,32 @@ namespace DM_automaton
 	{
 		public delegate void OnValidate(string validatedInput, bool isValid);
 		private OnValidate? onValidateCallback;
+		private Symbol[] exceptions;
 
 		public Symbol(OnValidate? onValidateCallback = null)
 		{
 			this.onValidateCallback = onValidateCallback;
+			this.exceptions = new Symbol[0];
+		}
+
+		public void SetExceptions(params Symbol[] exceptions)
+		{
+			this.exceptions = exceptions;
 		}
 
 		/// <summary>
 		/// Checks if the input conforms to the specification of the symbol and calls the OnValidate callback.
+		/// Returns false if the input conforms to any of the set exception symbols.
 		/// </summary>
 		public bool Validate(string input)
 		{
+			foreach (Symbol exception in this.exceptions)
+			{
+				if (exception.Validate(input))
+				{
+					return false;
+				}
+			}
 			bool isValid = this.ValidateInput(input);
 			if (this.onValidateCallback != null)
 			{

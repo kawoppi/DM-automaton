@@ -23,6 +23,7 @@ namespace DM_automaton
 			KeywordSet procModifier = new KeywordSet("/proc", "/verb");
 			KeywordSet typeModifier = new KeywordSet("/gobal", "/const", "/tmp");
 			AnyBetween parameters = new AnyBetween("(", ")");
+			subtype.SetExceptions(baseType, procModifier, typeModifier);
 
 			ISet<Symbol> alphabet = new HashSet<Symbol>();
 			alphabet.Add(baseType);
@@ -50,7 +51,7 @@ namespace DM_automaton
 			//temp test//
 			m_datumAcceptor = m_datumAcceptor.CreateDFA();
 			Console.WriteLine(m_datumAcceptor);
-			Program.TestWithString(m_datumAcceptor, "/datum/animal/hostile/retaliate/frog(/var/color)", false);
+			Program.TestWithString(m_datumAcceptor, "/datum/animal/hostile/retaliate/frog", true);
 		}
 	}
 }
