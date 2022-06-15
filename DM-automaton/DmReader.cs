@@ -44,14 +44,21 @@ namespace DM_automaton
 			m_datumAcceptor.AddTransition("C", subtype, "D");
 			m_datumAcceptor.DefineAsStartState("A");
 			m_datumAcceptor.DefineAsFinalState("D");
-			Console.WriteLine(m_datumAcceptor);
 
-			//TODO proc acceptor
+			//proc acceptor
+			m_procAcceptor.AddTransition("A", baseType, "B");
+			m_procAcceptor.AddTransition("B", subtype, "B");
+			m_procAcceptor.AddTransition("B", procModifier, "C");
+			m_procAcceptor.AddTransition("B", subtype, "D");
+			m_procAcceptor.AddTransition("D", parameters, "E");
+			m_procAcceptor.DefineAsStartState("A");
+			m_procAcceptor.DefineAsFinalState("E");
+			Console.WriteLine(m_procAcceptor);
 
 			//temp test//
-			m_datumAcceptor = m_datumAcceptor.CreateDFA();
-			Console.WriteLine(m_datumAcceptor);
-			Program.TestWithString(m_datumAcceptor, "/datum/animal/hostile/retaliate/frog", true);
+			m_procAcceptor = m_procAcceptor.CreateDFA();
+			Console.WriteLine(m_procAcceptor);
+			Program.TestWithString(m_procAcceptor, "/datum/animal/hostile/retaliate/frog(/var/color)", true);
 		}
 	}
 }
