@@ -16,26 +16,15 @@ namespace DM_automaton
 
 		public DmReader()
 		{
-			m_currentPath = new DmPath();
-			CreateAutomata();
-		}
-
-		private void CreateAutomata()
-		{
+			//create symbols with callbacks to fill datastructure
 			KeywordSet baseType = new KeywordSet(OnSegmentRead, "/datum", "/atom", "/turf", "/area", "/mob", "/obj", "/client", "/list", "/world");
 			StartsWith subtype = new StartsWith("/", OnSegmentRead);
 			KeywordSet procModifier = new KeywordSet(OnSegmentRead, "/proc", "/verb");
 			KeywordSet typeModifier = new KeywordSet(OnSegmentRead, "/gobal", "/const", "/tmp");
 			AnyBetween parameters = new AnyBetween("(", ")", OnSegmentRead);
-			subtype.SetExceptions(baseType, procModifier, typeModifier);
+			subtype.SetExceptions(baseType, procModifier, typeModifier); //prevent input from matching two symbols
 
-			ISet<Symbol> alphabet = new HashSet<Symbol>();
-			alphabet.Add(baseType);
-			alphabet.Add(subtype);
-			alphabet.Add(procModifier);
-			alphabet.Add(typeModifier);
-			alphabet.Add(parameters);
-
+			ISet<Symbol> alphabet = new HashSet<Symbol>(new Symbol[] { baseType, subtype, procModifier, typeModifier, parameters });
 			IStringSplitter splitter = new PathSplitter();
 			m_datumAcceptor = new Automaton(alphabet, splitter);
 			m_procAcceptor = new Automaton(alphabet, splitter);
@@ -58,12 +47,26 @@ namespace DM_automaton
 			m_procAcceptor.DefineAsStartState("A");
 			m_procAcceptor.DefineAsFinalState("E");
 			//TODO make this work for global procs
+		}
 
+		public void Test()
+		{
+			m_currentPath = new DmPath();
 			//temp test//
 			Console.WriteLine(m_procAcceptor);
 			m_procAcceptor = m_procAcceptor.CreateDFA();
 			Console.WriteLine(m_procAcceptor);
 			Program.TestWithString(m_procAcceptor, "/datum/animal/hostile/retaliate/frog(/var/color)", true);
+		}
+
+		public void ReadFile(string path)
+		{
+
+		}
+
+		public void ReadLine(string line)
+		{
+			m_currentPath = new DmPath();
 		}
 
 		private void OnSegmentRead(string segment, bool isValid)

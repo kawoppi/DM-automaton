@@ -40,6 +40,7 @@ namespace DM_automaton
 		{
 			TestSplitter(new PathSplitter(), input);
 			DmReader dmReader = new DmReader();
+			dmReader.Test();
 		}
 
 		public static void TestWithString(Automaton automaton, string input, bool expectedResult)
