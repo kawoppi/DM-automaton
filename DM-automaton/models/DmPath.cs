@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace DM_automaton.models
 {
-	public class Path
+	public class DmPath
 	{
 		private List<string> m_typeSegments;
 		private string? m_modifier;
 
-		public Path()
+		public DmPath()
 		{
 			m_typeSegments = new List<string>();
 		}
 
-		public Path(List<string> typeSegments)
+		private DmPath(List<string> typeSegments)
 		{
 			m_typeSegments = typeSegments;
 		}
@@ -36,16 +36,33 @@ namespace DM_automaton.models
 			return m_typeSegments.Last();
 		}
 
-		public Path GetParentType()
+		public DmPath GetParentType()
 		{
 			List<string> parentTypeSegments = new List<string>(m_typeSegments);
 			parentTypeSegments.RemoveAt(parentTypeSegments.Count - 1);
-			return new Path(parentTypeSegments);
+			return new DmPath(parentTypeSegments);
 		}
 
-		public string GetModifier()
+		public string? GetModifier()
 		{
 			return m_modifier;
+		}
+
+		public override string ToString()
+		{
+			string output = "";
+			for (int i = 0; i < m_typeSegments.Count; i++)
+			{
+				if (i == m_typeSegments.Count - 1) //modifier must be the first to last segment
+				{
+					if (m_modifier != null)
+					{
+						output += m_modifier;
+					}
+				}
+				output += m_typeSegments[i];
+			}
+			return output;
 		}
 	}
 }

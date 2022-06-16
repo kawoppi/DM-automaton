@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DM_automaton.models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,18 +12,21 @@ namespace DM_automaton
 		private Automaton m_datumAcceptor;
 		private Automaton m_procAcceptor;
 
+		private DmPath m_currentPath;
+
 		public DmReader()
 		{
+			m_currentPath = new DmPath();
 			CreateAutomata();
 		}
 
 		private void CreateAutomata()
 		{
-			KeywordSet baseType = new KeywordSet("/datum", "/atom", "/turf", "/area", "/mob", "/obj", "/client", "/list", "/world");
-			StartsWith subtype = new StartsWith("/");
-			KeywordSet procModifier = new KeywordSet("/proc", "/verb");
-			KeywordSet typeModifier = new KeywordSet("/gobal", "/const", "/tmp");
-			AnyBetween parameters = new AnyBetween("(", ")");
+			KeywordSet baseType = new KeywordSet(OnSegmentRead, "/datum", "/atom", "/turf", "/area", "/mob", "/obj", "/client", "/list", "/world");
+			StartsWith subtype = new StartsWith("/", OnSegmentRead);
+			KeywordSet procModifier = new KeywordSet(OnSegmentRead, "/proc", "/verb");
+			KeywordSet typeModifier = new KeywordSet(OnSegmentRead, "/gobal", "/const", "/tmp");
+			AnyBetween parameters = new AnyBetween("(", ")", OnSegmentRead);
 			subtype.SetExceptions(baseType, procModifier, typeModifier);
 
 			ISet<Symbol> alphabet = new HashSet<Symbol>();
@@ -60,6 +64,15 @@ namespace DM_automaton
 			m_procAcceptor = m_procAcceptor.CreateDFA();
 			Console.WriteLine(m_procAcceptor);
 			Program.TestWithString(m_procAcceptor, "/datum/animal/hostile/retaliate/frog(/var/color)", true);
+		}
+
+		private void OnSegmentRead(string segment, bool isValid)
+		{
+			if (isValid)
+			{
+				m_currentPath.AddTypeSegment(segment);
+				Console.WriteLine(m_currentPath);
+			}
 		}
 	}
 }
