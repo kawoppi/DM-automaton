@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DM_automaton.models;
+using System;
 
 namespace DM_automaton
 {
@@ -6,27 +7,32 @@ namespace DM_automaton
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("hi");
-			KeywordSet baseType = new KeywordSet();
-			StartsWith anySegment = new StartsWith("/");
-			KeywordSet procModifier = new KeywordSet("/proc", "/verb");
-			KeywordSet typeModifier = new KeywordSet("/gobal", "/const", "/tmp");
-			AnyBetween parameters = new AnyBetween("(", ")");
+			DmReader reader = new DmReader();
+			DmDefinitions definitions = reader.ReadFile("demoinput.dm"); //try "demoinput.dm" or "input.dm"
+			Console.WriteLine("***results before sorting procs***");
+			definitions.Print();
+			Console.WriteLine("***results after sorting procs***");
+			definitions.SortProcs();
+			definitions.Print();
+			//see Log for logging options
 		}
+
 	}
 }
 
-/* TODO:
- * design alphabet structure
- * port automaton code
- * convert NDFA to DFA automatically
- * (create automaton unit tests)
+/* TASKS:
+ *		urgent:
  * 
- * finish grammar definition
- * read DM file line by line
- * 
- * create DM definition datastructures
- * have automaton create DM definions
- * organize a collection of DM definitions into a tree structure
- * display this tree structure
+ *		cleanup:
+ *			improve NFA -> DFA code structure
+ *			differentiate between a single state(string) and StateSet using generic types
+ *			change field naming to use m_
+ *	
+ *		improvements:
+ *			ignore comments after procs/datums
+ *			make proc acceptor work for global procs
+ *			remove unreachable states from DFA
+ *			read multiple files and add to the same DmDefinitions object
+ *			add epsilon support
+ *			show proc overrides explicitly
  */
