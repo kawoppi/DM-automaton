@@ -73,10 +73,11 @@ namespace DM_automaton
  *		organize a collection of DM definition into a tree structure
  *		print this tree structure
  *		fix false negatives (trim input)
- *	
+ *		remove test code
+ *		test with real code
  * 
  * cleanup:
- *		remove test code
+ 
  *		improve NFA -> DFA code structure
  *		differentiate between state(string) and stateset using generic type
  *		cleanup and document DFA conversion code

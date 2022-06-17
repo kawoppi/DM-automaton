@@ -46,6 +46,7 @@ namespace DM_automaton
 			m_procAcceptor.AddTransition("B", subtype, "B");
 			m_procAcceptor.AddTransition("B", procModifier, "C");
 			m_procAcceptor.AddTransition("B", subtype, "D");
+			m_procAcceptor.AddTransition("C", subtype, "D");
 			m_procAcceptor.AddTransition("D", parameters, "E");
 			m_procAcceptor.DefineAsStartState("A");
 			m_procAcceptor.DefineAsFinalState("E");
