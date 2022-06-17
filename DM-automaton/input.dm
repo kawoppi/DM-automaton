@@ -6,4 +6,4 @@
 /mob/living/simple_animal/hostile/retaliate/frog/proc/on_entered(datum/source, AM as mob|obj)
 /datum/thing/item/material/metal/stack
 /datum/thing/item/material/metal/stack/fifty
-/datum/thing/item/material/metal
+a/datum/thing/item/material/metal

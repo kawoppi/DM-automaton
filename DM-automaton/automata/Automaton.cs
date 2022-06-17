@@ -93,6 +93,11 @@ namespace DM_automaton.Automata
 			foreach (string symbol in this.inputSplitter.Split(sequence))
 			{
 				ISet<StateSet> toStates = this.GetToStates(currentState, symbol);
+				if (toStates.Count == 0)
+				{
+					Log.Accept($"{currentState} --> no transition matched with symbol {symbol}");
+					break;
+				}
 				if (toStates.Count != 1)
 				{
 					Debug.Fail("multiple to states found in DFA");

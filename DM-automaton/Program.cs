@@ -24,9 +24,6 @@ namespace DM_automaton
  *		urgent:
  *			fix false negatives (trim input)
  *			test with real code
- *			fix path splitter false positive
- *			show overrides
- *			FIX CRASH IF NO TRANSITIONS ARE POSSIBLE
  * 
  *		cleanup:
  *			improve NFA -> DFA code structure
@@ -36,4 +33,5 @@ namespace DM_automaton
  *		improvements:
  *			remove unreachable states from DFA
  *			add epsilon support
+ *			show overrides
  */
