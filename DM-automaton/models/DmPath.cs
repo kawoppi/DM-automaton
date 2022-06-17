@@ -26,7 +26,7 @@ namespace DM_automaton.models
 			m_typeSegments.Add(typeSegment);
 		}
 
-		public void AddModifier(string modifier)
+		public void SetModifier(string modifier)
 		{
 			m_modifier = modifier;
 		}

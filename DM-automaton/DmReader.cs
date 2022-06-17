@@ -21,8 +21,8 @@ namespace DM_automaton
 			//create symbols with callbacks to fill datastructure
 			KeywordSet baseType = new KeywordSet(OnPathSegmentRead, "/datum", "/atom", "/turf", "/area", "/mob", "/obj", "/client", "/list", "/world");
 			StartsWith subtype = new StartsWith("/", OnPathSegmentRead);
-			KeywordSet procModifier = new KeywordSet(OnPathSegmentRead, "/proc", "/verb");
-			KeywordSet typeModifier = new KeywordSet(OnPathSegmentRead, "/gobal", "/const", "/tmp");
+			KeywordSet procModifier = new KeywordSet(OnModifierSegmentRead, "/proc", "/verb");
+			KeywordSet typeModifier = new KeywordSet(OnModifierSegmentRead, "/gobal", "/const", "/tmp");
 			AnyBetween parameters = new AnyBetween("(", ")", OnParametersRead);
 			subtype.SetExceptions(baseType, procModifier, typeModifier); //prevent input from matching two symbols
 
@@ -109,6 +109,14 @@ namespace DM_automaton
 			if (isValid)
 			{
 				m_currentPath.AddTypeSegment(segment);
+			}
+		}
+
+		private void OnModifierSegmentRead(string modifier, bool isValid)
+		{
+			if (isValid)
+			{
+				m_currentPath.SetModifier(modifier);
 			}
 		}
 
