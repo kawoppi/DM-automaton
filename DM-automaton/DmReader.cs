@@ -14,15 +14,16 @@ namespace DM_automaton
 		private Automaton m_procAcceptor;
 
 		private DmPath m_currentPath;
+		private string m_currentParameters;
 
 		public DmReader()
 		{
 			//create symbols with callbacks to fill datastructure
-			KeywordSet baseType = new KeywordSet(OnSegmentRead, "/datum", "/atom", "/turf", "/area", "/mob", "/obj", "/client", "/list", "/world");
-			StartsWith subtype = new StartsWith("/", OnSegmentRead);
-			KeywordSet procModifier = new KeywordSet(OnSegmentRead, "/proc", "/verb");
-			KeywordSet typeModifier = new KeywordSet(OnSegmentRead, "/gobal", "/const", "/tmp");
-			AnyBetween parameters = new AnyBetween("(", ")", OnSegmentRead);
+			KeywordSet baseType = new KeywordSet(OnPathSegmentRead, "/datum", "/atom", "/turf", "/area", "/mob", "/obj", "/client", "/list", "/world");
+			StartsWith subtype = new StartsWith("/", OnPathSegmentRead);
+			KeywordSet procModifier = new KeywordSet(OnPathSegmentRead, "/proc", "/verb");
+			KeywordSet typeModifier = new KeywordSet(OnPathSegmentRead, "/gobal", "/const", "/tmp");
+			AnyBetween parameters = new AnyBetween("(", ")", OnParametersRead);
 			subtype.SetExceptions(baseType, procModifier, typeModifier); //prevent input from matching two symbols
 
 			ISet<Symbol> alphabet = new HashSet<Symbol>(new Symbol[] { baseType, subtype, procModifier, typeModifier, parameters });
@@ -57,27 +58,51 @@ namespace DM_automaton
 			m_currentPath = new DmPath();
 			//temp test//
 			Console.WriteLine(m_procAcceptor);
-			
+
 			Console.WriteLine(m_procAcceptor);
 			Program.TestWithString(m_procAcceptor, "/datum/animal/hostile/retaliate/frog(/var/color)", true);
 		}
 
-		public void ReadFile(string path)
+		public void ReadFile(string path) //TODO return list of procs and datums
 		{
 
 		}
 
-		public void ReadLine(string line)
+		public void ReadLineForDatum(string line) //TODO return datum
 		{
 			m_currentPath = new DmPath();
+			m_currentParameters = null;
+			if (m_datumAcceptor.AcceptDFAOnly(line))
+			{
+				//return new datum
+			}
+			//return null
 		}
 
-		private void OnSegmentRead(string segment, bool isValid)
+		public void ReadLineForProc(string line) //TODO return proc
+		{
+			m_currentPath = new DmPath();
+			m_currentParameters = null;
+			if (m_procAcceptor.AcceptDFAOnly(line))
+			{
+				//return new proc
+			}
+			//return null
+		}
+
+		private void OnPathSegmentRead(string segment, bool isValid)
 		{
 			if (isValid)
 			{
 				m_currentPath.AddTypeSegment(segment);
-				//Console.WriteLine(m_currentPath);
+			}
+		}
+
+		private void OnParametersRead(string parameters, bool isValid)
+		{
+			if (isValid)
+			{
+				m_currentParameters = parameters;
 			}
 		}
 	}
