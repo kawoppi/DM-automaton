@@ -26,6 +26,7 @@ namespace DM_automaton
  *			test with real code
  *			fix path splitter false positive
  *			show overrides
+ *			FIX CRASH IF NO TRANSITIONS ARE POSSIBLE
  * 
  *		cleanup:
  *			improve NFA -> DFA code structure

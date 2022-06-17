@@ -19,29 +19,57 @@ namespace DM_automaton.Automata
 	{
 		public override string[] Split(string input)
 		{
-			//remove parameters first so they don't get split in segments
-			int startingIndex = input.IndexOf('(');
-			int endingIndex = input.LastIndexOf(')');
+			List<string> output = new List<string>();
+			int segmentIndex = -1; //first index of the segment currently being read
+			int parameterIndex = -1; //first index of the parameters currently being read
+			int startingIndex = -1; //first index of the first separated item
+			int endingIndex = -1; //last index of the last separated item
+			for (int i = 0; i < input.Length; i++)
+			{
+				
+				switch (input[i])
+				{
+					case '/':
+						if (parameterIndex == -1) //only if not already looking for parameters
+							if (segmentIndex >= 0) //if already reading a segment
+							{
+								output.Add(input.Substring(segmentIndex, i - segmentIndex)); //completed a segment
+								if (startingIndex == -1) startingIndex = segmentIndex; //only set the very first time an output is split
+								endingIndex = i; //set at the end of every split
+							}
+						segmentIndex = i;
 
-			string parameters = null;
-			if (startingIndex >= 0 && endingIndex >= 0)
-			{
-				parameters = input.Substring(startingIndex, endingIndex - startingIndex + 1);
-				input = input.Substring(0, startingIndex); //remove the parameters as they are already processed
+						break;
+					case '(':
+						if (segmentIndex >= 0) //if already reading a segment
+						{
+							output.Add(input.Substring(segmentIndex, i - segmentIndex)); //completed a segment
+							if (startingIndex == -1) startingIndex = segmentIndex; //only set the very first time an output is split
+							endingIndex = i; //set at the end of every split
+							segmentIndex = -1;
+						}
+						if (parameterIndex == -1) parameterIndex = i; //only if not already looking for parameters
+
+						break;
+					case ')':
+						if (parameterIndex >= 0)
+						{
+							output.Add(input.Substring(parameterIndex, i - parameterIndex + 1));
+							if (startingIndex == -1) startingIndex = parameterIndex; //only set the very first time an output is split
+							endingIndex = i + 1; //set at the end of every split
+							parameterIndex = -1;
+						}
+						break;
+				}
 			}
 
-			//now separate the path segments
-			List<string> segments = new List<string>(input.Split('/', StringSplitOptions.RemoveEmptyEntries));
-			for (int i = 0; i < segments.Count; i++)
-			{
-				segments[i] = "/" + segments[i];
-			}
-			if (parameters != null)
-			{
-				segments.Add(parameters); //add the parameters back at the end
-			}
-			return segments.ToArray();
-			//TODO put parameters back in the right order and support multiple of them
+			//add whatever hasn't been separated yet to the start and end
+			string start = input.Substring(0, startingIndex);
+			string end = input.Substring(endingIndex);
+			if (start.Count() > 0) output.Insert(0, start);
+			if (end.Count() > 0) output.Add(end);
+
+			return output.ToArray();
 		}
 	}
 
