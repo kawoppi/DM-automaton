@@ -11,9 +11,18 @@ namespace DM_automaton.models
 		public DmPath Path { get { return m_path; } }
 		private DmPath m_path;
 
+		public Proc[] Procs { get { return m_procs.ToArray(); } }
+		private List<Proc> m_procs;
+
 		public Datum(DmPath path)
 		{
 			m_path = path;
+			m_procs = new List<Proc>();
+		}
+
+		public void AddProc(Proc proc)
+		{
+			m_procs.Add(proc);
 		}
 
 		public override bool Equals(object? obj)

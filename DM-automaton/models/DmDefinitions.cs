@@ -8,13 +8,13 @@ namespace DM_automaton.models
 {
 	public class DmDefinitions
 	{
-		private ISet<Datum> m_datums;
-		private ISet<Proc> m_procs;
+		private ISet<Datum> m_datums; //only contains highest parents after sorting
+		private ISet<Proc> m_unsortedProcs; //only contains procs not contained in datums after sorting
 
 		public DmDefinitions()
 		{
 			m_datums = new HashSet<Datum>();
-			m_procs = new HashSet<Proc>();
+			m_unsortedProcs = new HashSet<Proc>();
 		}
 
 		public void AddDatum(Datum datum)
@@ -24,30 +24,49 @@ namespace DM_automaton.models
 
 		public void AddProc(Proc proc)
 		{
-			m_procs.Add(proc);
+			m_unsortedProcs.Add(proc);
 		}
 
 		public void Print()
 		{
-			//TODO improve
+			Sort();//
 			Console.WriteLine("datums:");
-			foreach (Datum datum in m_datums)
+			foreach (Datum datum in m_datums) //TODO sort datums in order or parents
 			{
 				Console.WriteLine("\t" + datum.ToString());
+				foreach (Proc proc in datum.Procs)
+				{
+					Console.WriteLine("\t\t" + proc.ToString()); //TODO print short version
+				}
 			}
-			Console.WriteLine("procs:");
-			foreach (Proc proc in m_procs)
+			Console.WriteLine("unsorted procs:");
+			foreach (Proc proc in m_unsortedProcs)
 			{
 				Console.WriteLine("\t" + proc.ToString());
 			}
 		}
 
+		/// <summary>
+		/// Puts Procs under the appropriate Datum if it exists.
+		/// </summary>
 		private void Sort()
 		{
-			//TODO
-			//go through each datum
-			//	go trhough each proc
-			//		if proc matches datum path, add proc to datum, remove proc from list
+			foreach (Datum datum in m_datums)
+			{
+				ISet<Proc> toRemove = new HashSet<Proc>();
+				foreach (Proc proc in m_unsortedProcs)
+				{
+					if (proc.Path.GetParentType().Equals(datum.Path))
+					{
+						datum.AddProc(proc);
+						toRemove.Add(proc);
+					}
+				}
+				foreach (Proc proc in toRemove)
+				{
+					m_unsortedProcs.Remove(proc);
+				}
+			}
 		}
 
 		/// <summary>
