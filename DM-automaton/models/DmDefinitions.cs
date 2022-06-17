@@ -14,7 +14,8 @@ namespace DM_automaton.models
 		public DmDefinitions()
 		{
 			m_datums = new SortedSet<Datum>();
-			m_unsortedProcs = new HashSet<Proc>();
+			//m_unsortedProcs = new HashSet<Proc>(); //display procs in reading order
+			m_unsortedProcs = new SortedSet<Proc>(); //display procs in sorted order
 		}
 
 		public void AddDatum(Datum datum)

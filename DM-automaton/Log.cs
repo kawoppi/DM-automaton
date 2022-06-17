@@ -8,7 +8,7 @@ namespace DM_automaton
 {
 	public static class Log
 	{
-		private const bool logAccept = false;
+		private const bool logAccept = true;
 		private const bool logDFACreation = true;
 		private const bool logDMRead = true;
 

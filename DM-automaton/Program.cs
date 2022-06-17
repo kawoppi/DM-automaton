@@ -15,6 +15,7 @@ namespace DM_automaton
 			Console.WriteLine("***results after sorting procs***");
 			definitions.SortProcs();
 			definitions.Print();
+			//see Log for logging options
 		}
 
 	}
@@ -22,8 +23,6 @@ namespace DM_automaton
 
 /* TASKS:
  *		urgent:
- *			fix false negatives (trim input)
- *			test with real code
  * 
  *		cleanup:
  *			improve NFA -> DFA code structure
@@ -31,8 +30,10 @@ namespace DM_automaton
  *			change field naming to use m_
  *	
  *		improvements:
+ *			ignore comments after procs/datums
  *			make proc acceptor work for global procs
  *			remove unreachable states from DFA
+ *			read multiple files and add to the same DmDefinitions object
  *			add epsilon support
  *			show proc overrides explicitly
  */
