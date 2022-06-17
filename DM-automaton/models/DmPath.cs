@@ -48,6 +48,25 @@ namespace DM_automaton.models
 			return m_modifier;
 		}
 
+		public override bool Equals(object? obj)
+		{
+			if (obj == null)
+			{
+				return false;
+			}
+			if (obj is DmPath)
+			{
+				DmPath other = (DmPath)obj;
+				return ToString().Equals(other.ToString());
+			}
+			return false;
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(ToString());
+		}
+
 		public override string ToString()
 		{
 			string output = "";

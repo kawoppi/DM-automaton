@@ -19,5 +19,29 @@ namespace DM_automaton.models
 			m_path = path;
 			m_parameters = parameters;
 		}
+
+		public override bool Equals(object? obj)
+		{
+			if (obj == null)
+			{
+				return false;
+			}
+			if (obj is Proc)
+			{
+				Proc other = (Proc)obj;
+				return m_path.Equals(other.m_path) && m_parameters.Equals(other.m_parameters);
+			}
+			return false;
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(m_path.ToString(), m_parameters);
+		}
+
+		public override string ToString()
+		{
+			return m_path.ToString() + m_parameters;
+		}
 	}
 }

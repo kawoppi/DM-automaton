@@ -53,35 +53,32 @@ namespace DM_automaton
 			//TODO make this work for global procs
 		}
 
-		public void Test()
+		public void Test() //
 		{
-			m_currentPath = new DmPath();
-			//temp test//
-			Console.WriteLine(m_procAcceptor);
-
-			Console.WriteLine(m_procAcceptor);
-			Program.TestWithString(m_procAcceptor, "/datum/animal/hostile/retaliate/frog(/var/color)", true);
+			ReadFile("/datum/animal/hostile/retaliate/frog(/var/color)").Print();
 		}
 
-		public void ReadFile(string path) //TODO return list of procs and datums
+		public DmDefinitions ReadFile(string path)
 		{
-
-			//TODO for each line
-			string line = "";
+			DmDefinitions definitions = new DmDefinitions();
+			
+			string line = path;//TODO for each line
 
 			Datum datum = ReadLineForDatum(line);
 			if (datum != null)
 			{
-				//add to list
+				definitions.AddDatum(datum);
 				//check next line
 			}
 
 			Proc proc = ReadLineForProc(line);
 			if (proc != null)
 			{
-				//add to list
+				definitions.AddProc(proc);
 				//check next line
 			}
+
+			return definitions;
 		}
 
 		public Datum? ReadLineForDatum(string line)
