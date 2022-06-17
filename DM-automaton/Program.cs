@@ -70,8 +70,6 @@ namespace DM_automaton
 
 /* TODO:
  * must have:
- *		organize a collection of DM definition into a tree structure
- *		print this tree structure
  *		fix false negatives (trim input)
  *		remove test code
  *		test with real code

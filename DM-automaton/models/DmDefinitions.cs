@@ -31,18 +31,18 @@ namespace DM_automaton.models
 		{
 			Sort();//
 			Console.WriteLine("datums:");
-			foreach (Datum datum in m_datums) //TODO sort datums in order or parents
+			foreach (Datum datum in m_datums)
 			{
-				Console.WriteLine("\t" + datum.ToString());
+				Console.WriteLine("\t" + datum.GetFullName());
 				foreach (Proc proc in datum.Procs)
 				{
-					Console.WriteLine("\t\t" + proc.ToString()); //TODO print short version
+					Console.WriteLine("\t\t" + proc.GetShortName());
 				}
 			}
 			Console.WriteLine("unsorted procs:");
 			foreach (Proc proc in m_unsortedProcs)
 			{
-				Console.WriteLine("\t" + proc.ToString());
+				Console.WriteLine("\t" + proc.GetFullName());
 			}
 		}
 

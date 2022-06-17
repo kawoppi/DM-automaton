@@ -50,9 +50,20 @@ namespace DM_automaton.models
 			return this.m_path.CompareTo(other.m_path);
 		}
 
-		public override string ToString()
+		public string GetFullName()
 		{
 			return m_path.ToString();
+		}
+
+		public string GetShortName()
+		{
+			string output = "";
+			if (m_path.GetModifier() != null)
+			{
+				output += m_path.GetModifier();
+			}
+			output += m_path.GetName();
+			return output;
 		}
 	}
 }

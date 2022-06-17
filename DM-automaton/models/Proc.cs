@@ -43,12 +43,23 @@ namespace DM_automaton.models
 		{
 			if (other == null) return 1;
 			//TODO sort on parameters  too
-			return this.m_path.CompareTo(other.m_path);
+			return this.GetFullName().CompareTo(other.GetFullName());
 		}
 
-		public override string ToString()
+		public string GetFullName()
 		{
 			return m_path.ToString() + m_parameters;
+		}
+
+		public string GetShortName()
+		{
+			string output = "";
+			if (m_path.GetModifier() != null)
+			{
+				output += m_path.GetModifier();
+			}
+			output += m_path.GetName() + m_parameters;
+			return output;
 		}
 	}
 }
