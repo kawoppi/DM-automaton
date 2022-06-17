@@ -9,10 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="demoinput.dm" />
     <None Remove="input.dm" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="demoinput.dm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="input.dm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

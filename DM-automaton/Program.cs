@@ -9,7 +9,7 @@ namespace DM_automaton
 		static void Main(string[] args)
 		{
 			DmReader reader = new DmReader();
-			DmDefinitions definitions = reader.ReadFile("input.dm");
+			DmDefinitions definitions = reader.ReadFile("demoinput.dm"); //try "demoinput.dm" or "input.dm"
 			Console.WriteLine("***results before sorting procs***");
 			definitions.Print();
 			Console.WriteLine("***results after sorting procs***");
