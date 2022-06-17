@@ -37,6 +37,7 @@ namespace DM_automaton
 			m_datumAcceptor.AddTransition("C", subtype, "D");
 			m_datumAcceptor.DefineAsStartState("A");
 			m_datumAcceptor.DefineAsFinalState("D");
+			m_datumAcceptor = m_datumAcceptor.CreateDFA();
 
 			//proc acceptor
 			m_procAcceptor.AddTransition("A", baseType, "B");
@@ -46,6 +47,7 @@ namespace DM_automaton
 			m_procAcceptor.AddTransition("D", parameters, "E");
 			m_procAcceptor.DefineAsStartState("A");
 			m_procAcceptor.DefineAsFinalState("E");
+			m_procAcceptor = m_procAcceptor.CreateDFA();
 			//TODO make this work for global procs
 		}
 
@@ -54,7 +56,7 @@ namespace DM_automaton
 			m_currentPath = new DmPath();
 			//temp test//
 			Console.WriteLine(m_procAcceptor);
-			m_procAcceptor = m_procAcceptor.CreateDFA();
+			
 			Console.WriteLine(m_procAcceptor);
 			Program.TestWithString(m_procAcceptor, "/datum/animal/hostile/retaliate/frog(/var/color)", true);
 		}

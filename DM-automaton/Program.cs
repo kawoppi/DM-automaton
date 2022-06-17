@@ -71,6 +71,8 @@ namespace DM_automaton
  * must have:
  *		create DM definition datastructures
  *		have automaton fill DM datastructures
+ *		improve test logging
+ *		
  *		organize a collection of DM definition into a tree structure
  *		print this tree structure
  *		read DM file line by line
