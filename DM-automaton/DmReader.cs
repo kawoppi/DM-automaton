@@ -66,28 +66,44 @@ namespace DM_automaton
 		public void ReadFile(string path) //TODO return list of procs and datums
 		{
 
+			//TODO for each line
+			string line = "";
+
+			Datum datum = ReadLineForDatum(line);
+			if (datum != null)
+			{
+				//add to list
+				//check next line
+			}
+
+			Proc proc = ReadLineForProc(line);
+			if (proc != null)
+			{
+				//add to list
+				//check next line
+			}
 		}
 
-		public void ReadLineForDatum(string line) //TODO return datum
+		public Datum? ReadLineForDatum(string line)
 		{
 			m_currentPath = new DmPath();
 			m_currentParameters = null;
 			if (m_datumAcceptor.AcceptDFAOnly(line))
 			{
-				//return new datum
+				return new Datum(m_currentPath);
 			}
-			//return null
+			return null;
 		}
 
-		public void ReadLineForProc(string line) //TODO return proc
+		public Proc? ReadLineForProc(string line)
 		{
 			m_currentPath = new DmPath();
 			m_currentParameters = null;
 			if (m_procAcceptor.AcceptDFAOnly(line))
 			{
-				//return new proc
+				return new Proc(m_currentPath, m_currentParameters);
 			}
-			//return null
+			return null;
 		}
 
 		private void OnPathSegmentRead(string segment, bool isValid)
