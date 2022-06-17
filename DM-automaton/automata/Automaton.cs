@@ -103,6 +103,7 @@ namespace DM_automaton.Automata
 			}
 			bool result = this.finalStates.Contains(currentState);
 			Log.Accept($"result: {result}");
+			Log.Accept("");
 			return result;
 		}
 
@@ -135,7 +136,8 @@ namespace DM_automaton.Automata
 					newStates.Add(new StateSet(combinedStates));
 				}
 			}
-			Log.DFACreation("new states: " + StatesToString(newStates));//
+			Log.DFACreation("created new states: " + StatesToString(newStates));
+			Log.DFACreation("");
 
 			//give each new state a transition for each symbol
 			foreach (StateSet state in newStates)
@@ -148,6 +150,7 @@ namespace DM_automaton.Automata
 					Log.DFACreation("created transition " + state + " --(" + symbol + ")-> " + toState);
 					dfa.AddTransition(new Transition<StateSet>(state, symbol, toState));
 				}
+				Log.DFACreation("");
 			}
 
 			//any new state containing an original final state should also become an final state
@@ -166,7 +169,8 @@ namespace DM_automaton.Automata
 				dfa.DefineAsStartState(state);
 			}
 
-			Log.DFACreation("resulting DFA: " + dfa + "\n");
+			Log.DFACreation("resulting DFA: " + dfa);
+			Log.DFACreation("");
 			return dfa;
 		}
 

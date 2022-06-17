@@ -42,7 +42,6 @@ namespace DM_automaton.models
 		public int CompareTo(Proc? other)
 		{
 			if (other == null) return 1;
-			//TODO sort on parameters  too
 			return this.GetFullName().CompareTo(other.GetFullName());
 		}
 

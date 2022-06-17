@@ -62,6 +62,7 @@ namespace DM_automaton
 		public DmDefinitions ReadFile(string path)
 		{
 			//TODO log which file it is
+			Log.DMRead($"reading from file: {path}");
 			DmDefinitions definitions = new DmDefinitions();
 			string[] lines = System.IO.File.ReadAllLines(path);
 			foreach (string line in lines)

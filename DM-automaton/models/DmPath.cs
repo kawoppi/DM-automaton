@@ -69,7 +69,7 @@ namespace DM_automaton.models
 
 		public int CompareTo(DmPath? other)
 		{
-			//if (other == null) return 1;
+			if (other == null) return 1;
 			//if (this.m_typeSegments.Count != other.m_typeSegments.Count) return this.m_typeSegments.Count - other.m_typeSegments.Count;
 			//if (this.m_modifier != null && other.m_modifier == null) return 1;
 			//if (this.m_modifier == null && other.m_modifier != null) return -1;

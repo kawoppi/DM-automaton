@@ -73,9 +73,9 @@ namespace DM_automaton
  *		fix false negatives (trim input)
  *		remove test code
  *		test with real code
+ *		add symbol nickname and improve automaton tostring
  * 
  * cleanup:
- 
  *		improve NFA -> DFA code structure
  *		differentiate between state(string) and stateset using generic type
  *		cleanup and document DFA conversion code

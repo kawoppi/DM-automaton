@@ -10,6 +10,7 @@ namespace DM_automaton
 	{
 		private const bool logAccept = true;
 		private const bool logDFACreation = true;
+		private const bool logDMRead = true;
 
 		public static void Accept(string message)
 		{
@@ -24,6 +25,14 @@ namespace DM_automaton
 			if (logDFACreation)
 			{
 				Console.WriteLine("DFA Creation: \t" + message);
+			}
+		}
+
+		public static void DMRead(string message)
+		{
+			if (logDMRead)
+			{
+				Console.WriteLine("DM reading: \t" + message);
 			}
 		}
 	}
