@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DM_automaton.models
 {
-	public class Datum
+	public class Datum : IComparable<Datum>
 	{
 		public DmPath Path { get { return m_path; } }
 		private DmPath m_path;
@@ -42,6 +42,12 @@ namespace DM_automaton.models
 		public override int GetHashCode()
 		{
 			return HashCode.Combine(m_path.ToString());
+		}
+
+		public int CompareTo(Datum? other)
+		{
+			if (other == null) return 1;
+			return this.m_path.CompareTo(other.m_path);
 		}
 
 		public override string ToString()

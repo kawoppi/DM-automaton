@@ -108,6 +108,8 @@ namespace DM_automaton
 		{
 			if (isValid)
 			{
+				//TODO stop this from being called twice for the first segment
+				//Console.WriteLine("added segment: " + segment);
 				m_currentPath.AddTypeSegment(segment);
 			}
 		}

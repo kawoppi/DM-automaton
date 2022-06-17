@@ -98,8 +98,8 @@ namespace DM_automaton.Automata
 					Debug.Fail("multiple to states found in DFA");
 					return false;
 				}
+				Log.Accept($"{currentState} --> {toStates.First()} using symbol {symbol}");
 				currentState = toStates.First();
-				Log.Accept($"{currentState} --> {currentState} using symbol {symbol}");
 			}
 			bool result = this.finalStates.Contains(currentState);
 			Log.Accept($"result: {result}");

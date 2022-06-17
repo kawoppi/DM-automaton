@@ -13,7 +13,7 @@ namespace DM_automaton.models
 
 		public DmDefinitions()
 		{
-			m_datums = new HashSet<Datum>();
+			m_datums = new SortedSet<Datum>();
 			m_unsortedProcs = new HashSet<Proc>();
 		}
 

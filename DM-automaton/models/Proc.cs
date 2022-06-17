@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DM_automaton.models
 {
-	public class Proc
+	public class Proc : IComparable<Proc>
 	{
 		public DmPath Path { get { return m_path; } }
 		private DmPath m_path;
@@ -37,6 +37,13 @@ namespace DM_automaton.models
 		public override int GetHashCode()
 		{
 			return HashCode.Combine(m_path.ToString(), m_parameters);
+		}
+
+		public int CompareTo(Proc? other)
+		{
+			if (other == null) return 1;
+			//TODO sort on parameters  too
+			return this.m_path.CompareTo(other.m_path);
 		}
 
 		public override string ToString()
