@@ -20,19 +20,19 @@ namespace DM_automaton
 	}
 }
 
-/* TODO:
- * must have:
- *		fix false negatives (trim input)
- *		test with real code
+/* TASKS:
+ *		urgent:
+ *			fix false negatives (trim input)
+ *			test with real code
+ *			fix path splitter false positive
+ *			show overrides
  * 
- * cleanup:
- *		improve NFA -> DFA code structure
- *		differentiate between state(string) and stateset using generic type
- *		cleanup and document DFA conversion code
- *		remove unreachable states from DFA
- *		improve path splitter
- *		change field naming to use m_
+ *		cleanup:
+ *			improve NFA -> DFA code structure
+ *			differentiate between a single state(string) and StateSet using generic types
+ *			change field naming to use m_
  *	
- * improvements:
- *		add epsilon support
+ *		improvements:
+ *			remove unreachable states from DFA
+ *			add epsilon support
  */
