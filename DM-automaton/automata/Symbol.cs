@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DM_automaton
+namespace DM_automaton.Automata
 {
 	/// <summary>
 	/// Represents a symbol to be used in the alphabet of an automaton.

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DM_automaton.Automata;
+using System;
 
 namespace DM_automaton
 {

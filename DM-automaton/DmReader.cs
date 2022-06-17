@@ -1,4 +1,5 @@
-﻿using DM_automaton.models;
+﻿using DM_automaton.Automata;
+using DM_automaton.models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

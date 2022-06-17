@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DM_automaton
+namespace DM_automaton.Automata
 {
 	public class Automaton
 	{
