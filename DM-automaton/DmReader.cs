@@ -55,29 +55,29 @@ namespace DM_automaton
 
 		public void Test() //
 		{
-			ReadFile("/datum/animal/hostile/retaliate/frog(/var/color)").Print();
+			ReadFile("input.dm").Print();
 		}
 
 		public DmDefinitions ReadFile(string path)
 		{
 			DmDefinitions definitions = new DmDefinitions();
-			
-			string line = path;//TODO for each line
-
-			Datum datum = ReadLineForDatum(line);
-			if (datum != null)
+			string[] lines = System.IO.File.ReadAllLines(path);
+			foreach (string line in lines)
 			{
-				definitions.AddDatum(datum);
-				//check next line
-			}
+				Datum datum = ReadLineForDatum(line);
+				if (datum != null)
+				{
+					definitions.AddDatum(datum);
+					continue;
+				}
 
-			Proc proc = ReadLineForProc(line);
-			if (proc != null)
-			{
-				definitions.AddProc(proc);
-				//check next line
+				Proc proc = ReadLineForProc(line);
+				if (proc != null)
+				{
+					definitions.AddProc(proc);
+					continue;
+				}
 			}
-
 			return definitions;
 		}
 
