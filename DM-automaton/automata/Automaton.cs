@@ -88,7 +88,7 @@ namespace DM_automaton.Automata
 		public bool AcceptDFAOnly(string sequence)
 		{
 			StateSet currentState = this.startStates.First();
-			Console.WriteLine($"Accept sequence {sequence}, start at state {currentState}");
+			Log.Accept($"sequence {sequence}, starting at state {currentState}");
 
 			foreach (string symbol in this.inputSplitter.Split(sequence))
 			{
@@ -98,11 +98,12 @@ namespace DM_automaton.Automata
 					Debug.Fail("multiple to states found in DFA");
 					return false;
 				}
-				Console.Write($"Went from state {currentState} ");
 				currentState = toStates.First();
-				Console.WriteLine($"to state {currentState} using symbol {symbol}");
+				Log.Accept($"{currentState} --> {currentState} using symbol {symbol}");
 			}
-			return this.finalStates.Contains(currentState);
+			bool result = this.finalStates.Contains(currentState);
+			Log.Accept($"result: {result}");
+			return result;
 		}
 
 		/// <summary>
@@ -134,7 +135,7 @@ namespace DM_automaton.Automata
 					newStates.Add(new StateSet(combinedStates));
 				}
 			}
-			Console.WriteLine("new states: " + StatesToString(newStates));//
+			Log.DFACreation("new states: " + StatesToString(newStates));//
 
 			//give each new state a transition for each symbol
 			foreach (StateSet state in newStates)
@@ -144,7 +145,7 @@ namespace DM_automaton.Automata
 				foreach (Symbol symbol in this.symbols)
 				{
 					StateSet toState = GetToStateFromSubstates(state, symbol);
-					Console.WriteLine(state + " --(" + symbol + ")-> " + toState);
+					Log.DFACreation("created transition " + state + " --(" + symbol + ")-> " + toState);
 					dfa.AddTransition(new Transition<StateSet>(state, symbol, toState));
 				}
 			}
@@ -165,7 +166,7 @@ namespace DM_automaton.Automata
 				dfa.DefineAsStartState(state);
 			}
 
-			Console.WriteLine(dfa);
+			Log.DFACreation("resulting DFA: " + dfa + "\n");
 			return dfa;
 		}
 

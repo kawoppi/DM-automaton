@@ -77,7 +77,7 @@ namespace DM_automaton
 			if (isValid)
 			{
 				m_currentPath.AddTypeSegment(segment);
-				Console.WriteLine(m_currentPath);
+				//Console.WriteLine(m_currentPath);
 			}
 		}
 	}

@@ -11,7 +11,7 @@ namespace DM_automaton
 			TestDmReader("/datum/animal/hostile/retaliate/frog(/var/color)");
 		}
 
-		static void TestDFA()
+		static void TestDFA()//
 		{
 			KeywordSet a = new KeywordSet("a");
 			KeywordSet b = new KeywordSet("b");
@@ -44,7 +44,7 @@ namespace DM_automaton
 			dmReader.Test();
 		}
 
-		public static void TestWithString(Automaton automaton, string input, bool expectedResult)
+		public static void TestWithString(Automaton automaton, string input, bool expectedResult)//
 		{
 			Console.WriteLine("testing automaton:");
 			Console.WriteLine(automaton);
@@ -72,7 +72,6 @@ namespace DM_automaton
  * must have:
  *		create DM definition datastructures
  *		have automaton fill DM datastructures
- *		improve test logging
  *		
  *		organize a collection of DM definition into a tree structure
  *		print this tree structure
