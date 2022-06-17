@@ -54,14 +54,8 @@ namespace DM_automaton
 			//TODO make this work for global procs
 		}
 
-		public void Test() //
-		{
-			ReadFile("input.dm").Print();
-		}
-
 		public DmDefinitions ReadFile(string path)
 		{
-			//TODO log which file it is
 			Log.DMRead($"reading from file: {path}");
 			DmDefinitions definitions = new DmDefinitions();
 			string[] lines = System.IO.File.ReadAllLines(path);

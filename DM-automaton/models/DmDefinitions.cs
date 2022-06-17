@@ -29,8 +29,7 @@ namespace DM_automaton.models
 
 		public void Print()
 		{
-			Sort();//
-			Console.WriteLine("datums:");
+			if (m_datums.Count > 0) Console.WriteLine("datums:");
 			foreach (Datum datum in m_datums)
 			{
 				Console.WriteLine("\t" + datum.GetFullName());
@@ -39,17 +38,18 @@ namespace DM_automaton.models
 					Console.WriteLine("\t\t" + proc.GetShortName());
 				}
 			}
-			Console.WriteLine("unsorted procs:");
+			if (m_unsortedProcs.Count > 0) Console.WriteLine("\nunsorted procs:");
 			foreach (Proc proc in m_unsortedProcs)
 			{
 				Console.WriteLine("\t" + proc.GetFullName());
 			}
+			Console.WriteLine("");
 		}
 
 		/// <summary>
-		/// Puts Procs under the appropriate Datum if it exists.
+		/// Tries to sort each Proc into the appropriate Datum.
 		/// </summary>
-		private void Sort()
+		public void SortProcs()
 		{
 			foreach (Datum datum in m_datums)
 			{
@@ -69,12 +69,5 @@ namespace DM_automaton.models
 			}
 		}
 
-		/// <summary>
-		/// Creates all implied parent datums from existing procs and datums if they do not exist already.
-		/// </summary>
-		private void GenerateParents()
-		{
-			//TODO
-		}
 	}
 }

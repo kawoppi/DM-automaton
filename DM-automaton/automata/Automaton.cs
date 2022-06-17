@@ -102,8 +102,7 @@ namespace DM_automaton.Automata
 				currentState = toStates.First();
 			}
 			bool result = this.finalStates.Contains(currentState);
-			Log.Accept($"result: {result}");
-			Log.Accept("");
+			Log.Accept($"result: {result}\n");
 			return result;
 		}
 
@@ -169,8 +168,7 @@ namespace DM_automaton.Automata
 				dfa.DefineAsStartState(state);
 			}
 
-			Log.DFACreation("resulting DFA: " + dfa);
-			Log.DFACreation("");
+			Log.DFACreation("resulting DFA: \n" + dfa + "\n");
 			return dfa;
 		}
 
