@@ -171,7 +171,7 @@ namespace DM_automaton.Automata
 		}
 
 		/// <summary>
-		/// Return the set of states can be reached from a given state when a given symbol is received.
+		/// Return the set of states that can be reached from a given state when a given symbol is received.
 		/// </summary>
 		private ISet<StateSet> GetToStates(StateSet from, string symbol)
 		{

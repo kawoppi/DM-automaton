@@ -30,17 +30,17 @@ namespace DM_automaton.Automata
 		/// Checks if the input conforms to the specification of the symbol and calls the OnValidate callback.
 		/// Returns false if the input conforms to any of the set exception symbols.
 		/// </summary>
-		public bool Validate(string input)
+		public bool Validate(string input, bool invokeCallback = true)
 		{
 			foreach (Symbol exception in this.exceptions)
 			{
-				if (exception.Validate(input))
+				if (exception.Validate(input, false))
 				{
 					return false;
 				}
 			}
 			bool isValid = this.ValidateInput(input);
-			if (this.onValidateCallback != null)
+			if (this.onValidateCallback != null && invokeCallback)
 			{
 				this.onValidateCallback(input, isValid);
 			}

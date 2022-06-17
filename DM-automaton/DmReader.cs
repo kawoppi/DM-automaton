@@ -24,7 +24,7 @@ namespace DM_automaton
 			KeywordSet procModifier = new KeywordSet(OnModifierSegmentRead, "/proc", "/verb");
 			KeywordSet typeModifier = new KeywordSet(OnModifierSegmentRead, "/gobal", "/const", "/tmp");
 			AnyBetween parameters = new AnyBetween("(", ")", OnParametersRead);
-			subtype.SetExceptions(baseType, procModifier, typeModifier); //prevent input from matching two symbols
+			subtype.SetExceptions(baseType, procModifier, typeModifier); //prevents input from matching two symbols
 
 			ISet<Symbol> alphabet = new HashSet<Symbol>(new Symbol[] { baseType, subtype, procModifier, typeModifier, parameters });
 			IStringSplitter splitter = new PathSplitter();
@@ -61,6 +61,7 @@ namespace DM_automaton
 
 		public DmDefinitions ReadFile(string path)
 		{
+			//TODO log which file it is
 			DmDefinitions definitions = new DmDefinitions();
 			string[] lines = System.IO.File.ReadAllLines(path);
 			foreach (string line in lines)
@@ -108,8 +109,6 @@ namespace DM_automaton
 		{
 			if (isValid)
 			{
-				//TODO stop this from being called twice for the first segment
-				//Console.WriteLine("added segment: " + segment);
 				m_currentPath.AddTypeSegment(segment);
 			}
 		}
