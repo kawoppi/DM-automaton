@@ -19,11 +19,11 @@ namespace DM_automaton
 		public DmReader()
 		{
 			//create symbols with callbacks to fill datastructure
-			KeywordSet baseType = new KeywordSet(OnPathSegmentRead, "/datum", "/atom", "/turf", "/area", "/mob", "/obj", "/client", "/list", "/world");
-			StartsWith subtype = new StartsWith("/", OnPathSegmentRead);
-			KeywordSet procModifier = new KeywordSet(OnModifierSegmentRead, "/proc", "/verb");
-			KeywordSet typeModifier = new KeywordSet(OnModifierSegmentRead, "/gobal", "/const", "/tmp");
-			AnyBetween parameters = new AnyBetween("(", ")", OnParametersRead);
+			KeywordSet baseType = new KeywordSet(new string[] { "/datum", "/atom", "/turf", "/area", "/mob", "/obj", "/client", "/list", "/world" }, OnPathSegmentRead, "basetype");
+			StartsWith subtype = new StartsWith("/", OnPathSegmentRead, "subtype");
+			KeywordSet procModifier = new KeywordSet(new string[] { "/proc", "/verb" }, OnModifierSegmentRead, "proc modifier");
+			KeywordSet typeModifier = new KeywordSet(new string[] { "/gobal", "/const", "/tmp" }, OnModifierSegmentRead, "type modifier");
+			AnyBetween parameters = new AnyBetween("(", ")", OnParametersRead, "parameters");
 			subtype.SetExceptions(baseType, procModifier, typeModifier); //prevents input from matching two symbols
 
 			ISet<Symbol> alphabet = new HashSet<Symbol>(new Symbol[] { baseType, subtype, procModifier, typeModifier, parameters });

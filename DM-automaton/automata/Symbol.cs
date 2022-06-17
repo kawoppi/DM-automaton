@@ -14,11 +14,13 @@ namespace DM_automaton.Automata
 		public delegate void OnValidate(string validatedInput, bool isValid);
 		private OnValidate? onValidateCallback;
 		private Symbol[] exceptions;
+		private string? name; //will be used as ToString() if set
 
-		public Symbol(OnValidate? onValidateCallback = null)
+		public Symbol(OnValidate? onValidateCallback = null, string? name = null)
 		{
 			this.onValidateCallback = onValidateCallback;
 			this.exceptions = new Symbol[0];
+			this.name = name;
 		}
 
 		public void SetExceptions(params Symbol[] exceptions)
@@ -48,6 +50,11 @@ namespace DM_automaton.Automata
 		}
 
 		abstract protected bool ValidateInput(string input);
+
+		public override string ToString()
+		{
+			return this.name;
+		}
 	}
 
 
@@ -59,12 +66,12 @@ namespace DM_automaton.Automata
 	{
 		private ISet<string> keywords;
 
-		public KeywordSet(OnValidate? onValidateCallback, params string[] keywords) : base(onValidateCallback)
+		public KeywordSet(string[] keywords, OnValidate? onValidateCallback = null, string? name = null) : base(onValidateCallback, name)
 		{
 			this.keywords = new HashSet<string>(keywords);
 		}
 
-		public KeywordSet(params string[] keywords) : this(null, keywords) { }
+		public KeywordSet(params string[] keywords) : this(keywords, null, null) { } //optional arguments and params cannot work together
 
 		protected override bool ValidateInput(string input)
 		{
@@ -73,6 +80,8 @@ namespace DM_automaton.Automata
 
 		public override string ToString()
 		{
+			if (base.ToString() != null) return base.ToString();
+
 			string output = "matches: ";
 			foreach (string keyword in this.keywords)
 			{
@@ -91,7 +100,7 @@ namespace DM_automaton.Automata
 	{
 		private string start;
 
-		public StartsWith(string start, OnValidate? onValidateCallback = null) : base(onValidateCallback)
+		public StartsWith(string start, OnValidate? onValidateCallback = null, string? name = null) : base(onValidateCallback, name)
 		{
 			this.start = start;
 		}
@@ -103,6 +112,7 @@ namespace DM_automaton.Automata
 
 		public override string ToString()
 		{
+			if (base.ToString() != null) return base.ToString();
 			return "starts with: \"" + this.start + "\"";
 		}
 	}
@@ -117,7 +127,7 @@ namespace DM_automaton.Automata
 		private string start;
 		private string end;
 
-		public AnyBetween(string start, string end, OnValidate? onValidateCallback = null) : base(onValidateCallback)
+		public AnyBetween(string start, string end, OnValidate? onValidateCallback = null, string? name = null) : base(onValidateCallback, name)
 		{
 			this.start = start;
 			this.end = end;
@@ -130,6 +140,7 @@ namespace DM_automaton.Automata
 
 		public override string ToString()
 		{
+			if (base.ToString() != null) return base.ToString();
 			return "starts with: \"" + this.start + "\" ends with: \"" + this.end + "\"";
 		}
 	}
