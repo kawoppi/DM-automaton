@@ -31,7 +31,8 @@ namespace DM_automaton
  *			change field naming to use m_
  *	
  *		improvements:
+ *			make proc acceptor work for global procs
  *			remove unreachable states from DFA
  *			add epsilon support
- *			show overrides
+ *			show proc overrides explicitly
  */
