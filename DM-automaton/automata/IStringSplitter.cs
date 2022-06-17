@@ -23,7 +23,7 @@ namespace DM_automaton.Automata
 			int segmentIndex = -1; //first index of the segment currently being read
 			int parameterIndex = -1; //first index of the parameters currently being read
 			int startingIndex = -1; //first index of the first separated item
-			int endingIndex = -1; //last index of the last separated item
+			int endingIndex = input.Count(); //last index of the last separated item
 			for (int i = 0; i < input.Length; i++)
 			{
 				
@@ -62,6 +62,7 @@ namespace DM_automaton.Automata
 						break;
 				}
 			}
+			if (startingIndex == -1) startingIndex = 0;
 
 			//add whatever hasn't been separated yet to the start and end
 			string start = input.Substring(0, startingIndex);

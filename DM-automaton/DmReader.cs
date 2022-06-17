@@ -61,10 +61,13 @@ namespace DM_automaton
 			string[] lines = System.IO.File.ReadAllLines(path);
 			foreach (string line in lines)
 			{
+				Log.DMRead($"reading line: {line}");
+
 				Datum datum = ReadLineForDatum(line);
 				if (datum != null)
 				{
 					definitions.AddDatum(datum);
+					Log.DMRead($"\tadded datum {datum.GetShortName()}");
 					continue;
 				}
 
@@ -72,6 +75,7 @@ namespace DM_automaton
 				if (proc != null)
 				{
 					definitions.AddProc(proc);
+					Log.DMRead($"\tadded proc {proc.GetShortName()}");
 					continue;
 				}
 			}
