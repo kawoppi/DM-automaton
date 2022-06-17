@@ -1,5 +1,4 @@
-﻿using DM_automaton.Automata;
-using DM_automaton.models;
+﻿using DM_automaton.models;
 using System;
 
 namespace DM_automaton
