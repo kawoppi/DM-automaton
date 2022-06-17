@@ -51,7 +51,6 @@ namespace DM_automaton
 			m_procAcceptor.DefineAsStartState("A");
 			m_procAcceptor.DefineAsFinalState("E");
 			m_procAcceptor = m_procAcceptor.CreateDFA();
-			//TODO make this work for global procs
 		}
 
 		public DmDefinitions ReadFile(string path)
